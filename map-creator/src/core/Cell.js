@@ -2,33 +2,24 @@ import React from 'react';
 export class Cell extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.state = this.props.myState;
+        this.quickTest = this.quickTest.bind(this);
+    }
 
-        }
+    quickTest() {
+        var a = this.state;
+        a.type = !a.type;
+        this.props.click(this.state.row, this.state.col, a);
     }
-/*    constructor(props) {
-        super(props);
-        this.rows = this.props.rows;
-        this.cols = this.props.cols;
-    }
-    mapBuilder = () => {
-        let returnRows = [];
-        for(let i = 0;i<this.rows;i++) {
-            let row = [];
-            row.push(<span>Test</span>)
-            returnRows.push(row);
-        }
-        return returnRows.map((row) => {
-            return <div>a{row}</div>
-        })
-    }
-*/
     render() {
+
+        let color = "#FFFFFF";
+        if(this.state.type === true) color = "#FF0000";
         return (
-            <span>
+            <span style={{backgroundColor: color, border: "1px solid lightgray", display:"inline-block", width:"35px", height:"35px"}}  onClick={this.quickTest}>
                 <span>
-                Rock
-            </span>
+                    &nbsp;
+                </span>
             </span>
         );
     }

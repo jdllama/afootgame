@@ -4,7 +4,6 @@ import {Cell} from "./Cell";
 export class Map extends React.Component {
     constructor(props) {
         super(props);
-        this.fart = props.fart;
         this.getMapData = this.props.getMapData;
         this.returnRows = [];
         this.mapBuilder = this.mapBuilder.bind(this);
