@@ -1,26 +1,37 @@
 import React from 'react';
-export class Cell extends React.Component {
+import './Cell.css';
+export default class Cell extends React.Component {
     constructor(props) {
         super(props);
-        this.state = this.props.myState;
-        this.quickTest = this.quickTest.bind(this);
+        this.row = props.row;
+        this.col = props.col;
+        this.setRoom = this.setRoom.bind(this);
+        this.setObject = this.setObject.bind(this);
     }
 
-    quickTest() {
-        var a = this.state;
-        a.type = !a.type;
-        this.props.click(this.state.row, this.state.col, a);
+    setRoom() {
+        this.props.updateRoom(this.row, this.col);
     }
+
+    setObject(e) {
+        e.preventDefault();
+        this.props.updateObject(this.row, this.col);
+    }
+    
     render() {
-
         let color = "#FFFFFF";
-        if(this.state.type === true) color = "#FF0000";
+        let cell = this.props.getCell(this.row, this.col);
+        let img = cell.objectHeld;
+        if(cell.type !== null) {
+            color = cell.type.color;
+        }
         return (
-            <span style={{backgroundColor: color, border: "1px solid lightgray", display:"inline-block", width:"35px", height:"35px"}}  onClick={this.quickTest}>
+            <span style={{backgroundColor: color}} className="Cell" onContextMenu={this.setObject} onClick={this.setRoom}>
                 <span>
-                    &nbsp;
+                    <img src={img} />
                 </span>
             </span>
         );
+
     }
 }

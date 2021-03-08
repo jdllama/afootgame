@@ -1,5 +1,5 @@
 import React from 'react';
-export class Dropdown extends React.Component {
+export default class Dropdown extends React.Component {
     
     constructor(props) {
         super(props);
