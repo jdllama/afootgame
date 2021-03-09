@@ -8,6 +8,15 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+function genericCell(row, col) {
+    return {
+        objectHeld: null,
+        type: null,
+        row: row,
+        col: col
+    }
+}
+
 export class Main extends React.Component {
     constructor(props) {
         super(props);
@@ -36,7 +45,7 @@ export class Main extends React.Component {
         for(var i = 0; i<rows;i++) {
             let row = [];
             for(var j = 0;j<cols;j++) {
-                row.push({objectHeld: null, type: null, row: i, col: j})
+                row.push(genericCell(i, j));
             }
             returnData.push(row)
         }
@@ -119,7 +128,6 @@ export class Main extends React.Component {
 
     updateCellObject(row, col) {
         this.updateCell(row, col, (cell) => {
-            //cell.type = true;
             cell.objectHeld = this.state.objectType;
             return cell;
         });
@@ -158,7 +166,7 @@ export class Main extends React.Component {
         for(var i = 0; i<this.state.rows;i++) {
             let row = [];
             for(var j = 0;j<this.state.cols;j++) {
-                row.push({objectHeld: null, type: true, row: i, col: j})
+                row.push(genericCell(i, j));
             }
             returnData.push(row)
         }
@@ -194,7 +202,28 @@ export class Main extends React.Component {
             },
             "Hallway": {
                 color: "lightgray",
-            }
+            },
+            "Room 1": {
+                color: "#7209B7",
+            },
+            "Room 2": {
+                color: "#D7263D",
+            },
+            "Room 3": {
+                color: "#08A4BD",
+            },
+            "Room 4": {
+                color: "#33673B",
+            },
+            "Room 5": {
+                color: "#FF9F1C",
+            },
+            "Main Room": {
+                color: "#FDF0D5",
+            },
+            "Security": {
+                color: "#4C4C4C",
+            },
         }
         return Object.keys(rooms).map(room => {
             //return null;
