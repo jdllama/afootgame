@@ -7,6 +7,7 @@ export default class Cell extends React.Component {
         this.col = props.col;
         this.setRoom = this.setRoom.bind(this);
         this.setObject = this.setObject.bind(this);
+        this.setWall = this.setWall.bind(this);
     }
 
     setRoom() {
@@ -14,8 +15,13 @@ export default class Cell extends React.Component {
     }
 
     setObject(e) {
+        //onContextMenu={this.setObject}
         e.preventDefault();
         this.props.updateObject(this.row, this.col);
+    }
+
+    setWall(whichWall) {
+        this.props.updateWall(this.row, this.col, whichWall);
     }
     
     render() {
@@ -26,7 +32,11 @@ export default class Cell extends React.Component {
             color = cell.type.color;
         }
         return (
-            <span style={{backgroundColor: color}} className="Cell" onContextMenu={this.setObject} onClick={this.setRoom}>
+            <span style={{backgroundColor: color}} className="Cell" onClick={this.setRoom}>
+                <span className="Wall" onClick={(e) => {e.stopPropagation(); this.setWall("north")}} style={{width: "100%", top: 0, left: 0, height: "5px", backgroundColor: cell.northWall === true ? "black" : ""}}></span>
+                <span className="Wall" onClick={(e) => {e.stopPropagation(); this.setWall("south")}} style={{width: "100%", bottom: 0, left: 0, height: "5px", backgroundColor: cell.southWall === true ? "black" : ""}}></span>
+                <span className="Wall" onClick={(e) => {e.stopPropagation(); this.setWall("west")}} style={{left: 0, top: 0, height: "100%", width: "5px", backgroundColor: cell.westWall === true ? "black" : ""}}></span>
+                <span className="Wall" onClick={(e) => {e.stopPropagation(); this.setWall("east")}} style={{right: 0, top: 0, height: "100%", width: "5px", backgroundColor: cell.eastWall === true ? "black" : ""}}></span>
                 <span>
                     <img src={img} />
                 </span>

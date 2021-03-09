@@ -13,7 +13,11 @@ function genericCell(row, col) {
         objectHeld: null,
         type: null,
         row: row,
-        col: col
+        col: col,
+        northWall: false,
+        southWall: false,
+        eastWall: false,
+        westWall: false,
     }
 }
 
@@ -32,6 +36,7 @@ export class Main extends React.Component {
         this.updateCell = this.updateCell.bind(this);
         this.updateCellRoom = this.updateCellRoom.bind(this);
         this.updateCellObject = this.updateCellObject.bind(this);
+        this.updateCellWall = this.updateCellWall.bind(this);
 
         this.setCurrentRoom = this.setCurrentRoom.bind(this);
         this.setCurrentObject = this.setCurrentObject.bind(this);
@@ -136,6 +141,25 @@ export class Main extends React.Component {
     updateCellRoom(row, col) {
         this.updateCell(row, col, (cell) => {
             cell.type = this.state.roomType;
+            return cell;
+        });
+    }
+
+    updateCellWall(row, col, whichWall) {
+        this.updateCell(row, col, (cell) => {
+            //cell.type = this.state.roomType;
+            if(whichWall === "north") {
+                cell.northWall = !cell.northWall;
+            }
+            else if(whichWall === "south") {
+                cell.southWall = !cell.southWall;
+            }
+            else if(whichWall === "west") {
+                cell.westWall = !cell.westWall;
+            }
+            else if(whichWall === "east") {
+                cell.eastWall = !cell.eastWall;
+            }
             return cell;
         });
     }
@@ -261,7 +285,7 @@ export class Main extends React.Component {
                             this.state.mapData.map(row => {
                                 return <div>{row.map(cell => {
                                     let key = cell.row + " " + cell.col;
-                                    return <Cell updateRoom={this.updateCellRoom} updateObject={this.updateCellObject} key={key} row={cell.row} col={cell.col} getCell={this.getSingleCell}/>
+                                    return <Cell updateRoom={this.updateCellRoom} updateWall={this.updateCellWall} updateObject={this.updateCellObject} key={key} row={cell.row} col={cell.col} getCell={this.getSingleCell}/>
                                 })}</div>
                             })
                         }

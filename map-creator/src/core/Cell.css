@@ -1,6 +1,18 @@
 .Cell {
+    position: relative;
     border: 1px solid lightgray;
     display:inline-block;
     width:35px;
     height:35px;
+}
+
+.Wall {
+    display: inline-block;
+    position: absolute;
+}
+
+.Wall:hover {
+    cursor: pointer;
+    background-color: black !important;
+    opacity: 0.5;
 }
