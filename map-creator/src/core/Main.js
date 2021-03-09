@@ -179,7 +179,7 @@ export class Main extends React.Component {
     }
 
     buildJSON() {
-        console.log(this.state.mapData);
+        console.log(JSON.stringify(this.state.mapData));
     }
 
     componentDidMount() {
