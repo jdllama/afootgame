@@ -9,6 +9,16 @@ app.use((req, res, next) => {
     next();
 })
 
+//app.use(require("express").static("public"));
+
 http.listen(PORT, () => {
     console.log(`listening on *:${PORT}`);
+});
+
+io.sockets.on("connection", socket => {
+    console.log("connected",io.of("/").sockets.size);
+
+    socket.on("disconnect", () => {
+        console.log("disconnect",io.of("/").sockets.size);
+    });
 });

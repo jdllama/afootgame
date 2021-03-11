@@ -32,13 +32,13 @@ export default class Cell extends React.Component {
             color = cell.type.color;
         }
         return (
-            <span style={{backgroundColor: color}} className="Cell" onClick={this.setRoom}>
+            <span style={{backgroundColor: color}} className="Cell" onClick={this.setRoom} onContextMenu={this.setObject}>
                 <span className="Wall" onClick={(e) => {e.stopPropagation(); this.setWall("north")}} style={{width: "100%", top: 0, left: 0, height: "5px", backgroundColor: cell.northWall === true ? "black" : ""}}></span>
                 <span className="Wall" onClick={(e) => {e.stopPropagation(); this.setWall("south")}} style={{width: "100%", bottom: 0, left: 0, height: "5px", backgroundColor: cell.southWall === true ? "black" : ""}}></span>
                 <span className="Wall" onClick={(e) => {e.stopPropagation(); this.setWall("west")}} style={{left: 0, top: 0, height: "100%", width: "5px", backgroundColor: cell.westWall === true ? "black" : ""}}></span>
                 <span className="Wall" onClick={(e) => {e.stopPropagation(); this.setWall("east")}} style={{right: 0, top: 0, height: "100%", width: "5px", backgroundColor: cell.eastWall === true ? "black" : ""}}></span>
                 <span>
-                    <img src={img} />
+                    <img src={img ? img.icon : null} />
                 </span>
             </span>
         );

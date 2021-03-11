@@ -8,6 +8,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import padlockIcon from "../padlock.png";
+import securityIcon from "../security.png";
+
 function genericCell(row, col) {
     return {
         objectHeld: null,
@@ -54,6 +57,8 @@ export class Main extends React.Component {
             }
             returnData.push(row)
         }
+
+        returnData = [[{"objectHeld":null,"type":null,"row":0,"col":0,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":null,"row":0,"col":1,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":null,"row":0,"col":2,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":null,"row":0,"col":3,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":null,"row":0,"col":4,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":null,"row":0,"col":5,"northWall":false,"southWall":false,"eastWall":false,"westWall":false}],[{"objectHeld":null,"type":null,"row":1,"col":0,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":{"color":"#7209B7","name":"Room 1"},"row":1,"col":1,"northWall":true,"southWall":false,"eastWall":false,"westWall":true},{"objectHeld":null,"type":{"color":"#7209B7","name":"Room 1"},"row":1,"col":2,"northWall":true,"southWall":false,"eastWall":true,"westWall":false},{"objectHeld":null,"type":{"color":"lightgray","name":"Hallway"},"row":1,"col":3,"northWall":true,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":{"color":"#33673B","name":"Room 4"},"row":1,"col":4,"northWall":true,"southWall":false,"eastWall":true,"westWall":false},{"objectHeld":null,"type":null,"row":1,"col":5,"northWall":false,"southWall":false,"eastWall":false,"westWall":false}],[{"objectHeld":null,"type":null,"row":2,"col":0,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":{"color":"#7209B7","name":"Room 1"},"row":2,"col":1,"northWall":false,"southWall":false,"eastWall":false,"westWall":true},{"objectHeld":null,"type":{"color":"#7209B7","name":"Room 1"},"row":2,"col":2,"northWall":false,"southWall":true,"eastWall":false,"westWall":false},{"objectHeld":null,"type":{"color":"lightgray","name":"Hallway"},"row":2,"col":3,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":{"color":"#33673B","name":"Room 4"},"row":2,"col":4,"northWall":false,"southWall":false,"eastWall":true,"westWall":false},{"objectHeld":null,"type":null,"row":2,"col":5,"northWall":false,"southWall":false,"eastWall":false,"westWall":false}],[{"objectHeld":null,"type":null,"row":3,"col":0,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":{"color":"#08A4BD","name":"Room 3"},"row":3,"col":1,"northWall":false,"southWall":false,"eastWall":false,"westWall":true},{"objectHeld":null,"type":{"color":"#08A4BD","name":"Room 3"},"row":3,"col":2,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":{"color":"lightgray","name":"Hallway"},"row":3,"col":3,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":{"color":"#33673B","name":"Room 4"},"row":3,"col":4,"northWall":false,"southWall":false,"eastWall":true,"westWall":true},{"objectHeld":null,"type":null,"row":3,"col":5,"northWall":false,"southWall":false,"eastWall":false,"westWall":false}],[{"objectHeld":null,"type":null,"row":4,"col":0,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":{"color":"#08A4BD","name":"Room 3"},"row":4,"col":1,"northWall":false,"southWall":true,"eastWall":false,"westWall":true},{"objectHeld":null,"type":{"color":"#08A4BD","name":"Room 3"},"row":4,"col":2,"northWall":false,"southWall":true,"eastWall":false,"westWall":false},{"objectHeld":null,"type":{"color":"lightgray","name":"Hallway"},"row":4,"col":3,"northWall":false,"southWall":true,"eastWall":false,"westWall":false},{"objectHeld":null,"type":{"color":"#33673B","name":"Room 4"},"row":4,"col":4,"northWall":false,"southWall":true,"eastWall":true,"westWall":false},{"objectHeld":null,"type":null,"row":4,"col":5,"northWall":false,"southWall":false,"eastWall":false,"westWall":false}],[{"objectHeld":null,"type":null,"row":5,"col":0,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":null,"row":5,"col":1,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":null,"row":5,"col":2,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":null,"row":5,"col":3,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":null,"row":5,"col":4,"northWall":false,"southWall":false,"eastWall":false,"westWall":false},{"objectHeld":null,"type":null,"row":5,"col":5,"northWall":false,"southWall":false,"eastWall":false,"westWall":false}]];
         this.state = {
             mapData: returnData,
             cols: cols,
@@ -212,7 +217,13 @@ export class Main extends React.Component {
             },
             "Camera": {
                 icon: null,
-            }
+            },
+            "Thief Entrance": {
+                icon: padlockIcon,
+            },
+            "Security": {
+                icon: securityIcon,
+            },
         }
         return Object.keys(objs).map(obj => {
             return <Obj name={obj} icon={objs[obj].icon} setObj={this.setCurrentObject}/>
