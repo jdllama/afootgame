@@ -1,0 +1,50 @@
+module.exports = class Game {
+    constructor(obj) {
+        this.gameID = obj.gameID;
+        this.players = [];
+        this.thief = null;
+        this.gameMap = [];
+        this.gameStatus = "pending";
+
+        this.joinGame = this.joinGame.bind(this);
+        this.playerLeavesGame = this.playerLeavesGame.bind(this);
+        this.updateAllPlayers = this.updateAllPlayers.bind(this);
+    }
+
+    joinGame(socket, success, fail) {
+        if(this.players.length <= 5) {
+            if(this.gameStatus !== "pending") {
+                return fail("Game is currently active");
+            }
+            this.players.push(socket);
+            success();
+        }
+        else fail("Room is full");
+    }
+
+    updateAllPlayers() {
+        this.players.forEach(socket => {
+            
+            socket.emit("game update", {
+                players: this.players.map(player => {
+                    return {
+                        nickname: player.nickname,
+                        id: player.client.id,
+                    }
+                }),
+                myID: socket.client.id,
+                thief: this.thief,
+                gameMap: this.gameMap,
+                gameStatus: this.gameStatus,
+                inGame: true,
+            });
+        });
+    }
+
+    playerLeavesGame(socket) {
+        this.players = this.players.filter(player => {
+            return player.client.id !== socket.client.id;
+        });
+        this.updateAllPlayers();
+    }
+}

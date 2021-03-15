@@ -218,8 +218,11 @@ export class Main extends React.Component {
             "Camera": {
                 icon: null,
             },
-            "Thief Entrance": {
+            "Thief Exit": {
                 icon: padlockIcon,
+            },
+            "Thief Entrance": {
+                icon: null,
             },
             "Security": {
                 icon: securityIcon,

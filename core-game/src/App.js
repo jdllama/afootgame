@@ -1,26 +1,74 @@
 import React from 'react';
-import Gamefield from "./Gamefield";
+import Gamefield from "./game/Gamefield";
+import GameCreate from "./pregame/GameCreate";
 import socketClient  from "socket.io-client";
 export default class Main extends React.Component {
   constructor(props) {
     
     super(props);
-    const isLocalhost = Boolean(
-      window.location.hostname === 'localhost' ||
-      // [::1] is the IPv6 localhost address.
-      window.location.hostname === '[::1]' ||
-      // 127.0.0.1/8 is considered localhost for IPv4.
-      window.location.hostname.match(
-          /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
-      )
-  );
+    this.state = {
+      inGame: false,
+      gameMap: [],
+      players: [],
+      gameStatus: null,
+      thief: null,
+    };
+
     const SERVER = "http://localhost:8080/";
-    this.socket = socketClient(SERVER, {transports: ['websocket']});
+    let socket = socketClient(SERVER, {transports: ['websocket']});;
+
+    /*socket.on("join game", () => {
+      this.setState({inGame: true});
+    })
+    */
+
+    socket.on("game update", data => {
+      console.log(data);
+      this.setState(data);
+    })
+
+    socket.on("leave game", () => {
+      this.setState({
+        inGame: false,
+        gameMap: [],
+        players: [],
+        gameStatus: null,
+        thief: null,
+      });
+    });
+
+    socket.on("error", data => {
+      console.log(data);
+    })
+
+    this.socket = socket;
+
+    this.createGame = this.createGame.bind(this);
+  }
+
+  createGame(data) {
+    //this.socket.emit("create game");
+    this.socket.emit("try join game", data);
   }
 
   render() {
+    let returner = null;
+    if(this.state.inGame === true) {
+      returner = (
+        <>
+          <Gamefield />
+        </>
+      )
+    }
+    else {
+      returner = (
+        <>
+          <GameCreate createGame={this.createGame}/>
+        </>
+      );
+    }
     return (
-      <Gamefield />
+      returner
     );
   }
 }
