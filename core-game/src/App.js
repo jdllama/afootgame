@@ -56,7 +56,7 @@ export default class Main extends React.Component {
     if(this.state.inGame === true) {
       returner = (
         <>
-          <Gamefield />
+          <Gamefield players={this.state.players} />
         </>
       )
     }

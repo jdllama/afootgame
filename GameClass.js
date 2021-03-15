@@ -5,10 +5,12 @@ module.exports = class Game {
         this.thief = null;
         this.gameMap = [];
         this.gameStatus = "pending";
+        this.mod = null;
 
         this.joinGame = this.joinGame.bind(this);
         this.playerLeavesGame = this.playerLeavesGame.bind(this);
         this.updateAllPlayers = this.updateAllPlayers.bind(this);
+        this.setMod = this.setMod.bind(this);
     }
 
     joinGame(socket, success, fail) {
@@ -22,6 +24,10 @@ module.exports = class Game {
         else fail("Room is full");
     }
 
+    setMod(socket) {
+        this.mod = socket;
+    }
+
     updateAllPlayers() {
         this.players.forEach(socket => {
             
@@ -29,14 +35,15 @@ module.exports = class Game {
                 players: this.players.map(player => {
                     return {
                         nickname: player.nickname,
-                        id: player.client.id,
+                        isMe: player.client.id === socket.client.id,
+                        isMod: player.client.id === this.mod.client.id,
                     }
                 }),
-                myID: socket.client.id,
                 thief: this.thief,
                 gameMap: this.gameMap,
                 gameStatus: this.gameStatus,
                 inGame: true,
+                amIMod: socket.client.id === this.mod.client.id,
             });
         });
     }
@@ -45,6 +52,9 @@ module.exports = class Game {
         this.players = this.players.filter(player => {
             return player.client.id !== socket.client.id;
         });
+        if(this.mod.client.id === socket.client.id) {
+            if(this.players[0] !== undefined) this.setMod(this.players[0]);
+        }
         this.updateAllPlayers();
     }
 }
