@@ -1,4 +1,5 @@
 import React from 'react';
+import "./GameCreate.css";
 
 export default class GameCreate extends React.Component {
     constructor(props) {
@@ -18,12 +19,14 @@ export default class GameCreate extends React.Component {
         const name = target.name;
         
         let value = "";
+
+
         
         if(name === "gameID") {
             value = target.value.replace(/[^\w]/gi, '').substring(0, 20).trim();
         }
         else {
-            value = target.value.trim();
+            value = target.value;
         }
 
         this.setState({
@@ -56,9 +59,10 @@ export default class GameCreate extends React.Component {
             err = (<div>ERROR:<br />{this.state.error}</div>)
         }
         return (
-            <div>
-                <label>Display name:<br /><input type="text" name="nickname" value={this.state.nickname} onChange={this.inputChange} /></label><br />
-                <label>Game code:<br /><input type="text" name="gameID" value={this.state.gameID} onChange={this.inputChange} /></label><br />
+            <div className="game-create">
+                <label>Display name:<br /><input type="text" autocomplete="off" name="nickname" value={this.state.nickname} onChange={this.inputChange} /></label>
+                <label>Game code:<br />
+                <input type="text" autocomplete="off" name="gameID" value={this.state.gameID} onChange={this.inputChange} /></label>
                 <button onClick={this.joinGame}>Create/join game</button>
                 {err}
             </div>

@@ -1,7 +1,9 @@
 import React from 'react';
-import Gamefield from "./game/Gamefield";
+import Game from "./game/Game";
 import GameCreate from "./pregame/GameCreate";
 import socketClient  from "socket.io-client";
+import './normalize.css';
+import './App.css';
 export default class Main extends React.Component {
   constructor(props) {
     
@@ -56,7 +58,7 @@ export default class Main extends React.Component {
     if(this.state.inGame === true) {
       returner = (
         <>
-          <Gamefield players={this.state.players} />
+          <Game players={this.state.players} />
         </>
       )
     }
@@ -68,13 +70,17 @@ export default class Main extends React.Component {
       );
     }
     return (
-      returner
+      <div>
+        {returner}
+        <div>
+          Hey this is at the bottom of everything OK?
+        </div>
+      </div>
     );
   }
 }
 /*
 import logo from './logo.svg';
-import './App.css';
 
 function App() {
   return (

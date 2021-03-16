@@ -1,0 +1,23 @@
+.game-create {
+    margin: 100px;
+    background-color: #59A96A;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px;
+    width: 400px;
+}
+.game-create input {
+    margin-bottom: 10px;
+    width:100%;
+}
+
+.game-create button {
+    background-color: #FF4365;
+    color: #FFFFF3;
+    padding: 7px;
+}
+.game-create * {
+    font-family: 'Recursive', sans-serif;
+}
