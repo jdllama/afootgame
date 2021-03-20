@@ -7,22 +7,10 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import CellData from "./CellData"
 
 import padlockIcon from "../padlock.png";
 import securityIcon from "../security.png";
-
-function genericCell(row, col) {
-    return {
-        objectHeld: null,
-        type: null,
-        row: row,
-        col: col,
-        northWall: false,
-        southWall: false,
-        eastWall: false,
-        westWall: false,
-    }
-}
 
 export class Main extends React.Component {
     constructor(props) {
@@ -53,7 +41,7 @@ export class Main extends React.Component {
         for(var i = 0; i<rows;i++) {
             let row = [];
             for(var j = 0;j<cols;j++) {
-                row.push(genericCell(i, j));
+                row.push(new CellData(i, j));
             }
             returnData.push(row)
         }
@@ -184,7 +172,25 @@ export class Main extends React.Component {
     }
 
     buildJSON() {
-        console.log(JSON.stringify(this.state.mapData));
+        let myJSON = [...this.state.mapData];
+        myJSON = myJSON.map(row => {
+            return row.map(cell => {
+                return {
+                    row: cell.row,
+                    col: cell.col,
+                    northWall: cell.northWall,
+                    southWall: cell.southWall,
+                    eastWall: cell.eastWall,
+                    westWall: cell.westWall,
+                    cellType: cell.type ? cell.type.name : null,
+                    currentObject: cell.objectHeld ? cell.objectHeld.name : null,
+                    currentPlayers: [],
+                };
+            })
+            
+        })
+        console.log(JSON.stringify(myJSON));
+        //console.log(JSON.stringify(this.state.mapData));
     }
 
     componentDidMount() {
@@ -195,7 +201,7 @@ export class Main extends React.Component {
         for(var i = 0; i<this.state.rows;i++) {
             let row = [];
             for(var j = 0;j<this.state.cols;j++) {
-                row.push(genericCell(i, j));
+                row.push(new CellData(i, j));
             }
             returnData.push(row)
         }

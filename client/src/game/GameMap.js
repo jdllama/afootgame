@@ -11,10 +11,25 @@ export default class GameMap extends React.Component {
             <div>{renders}</div>
         )
         */
+       let map = this.props.map;
+       let renders = [];
+       //console.log(map);
+        map.forEach(row => {
+            let cells = [];
+
+            row.forEach(cell => {
+                cells.push(<div>Hi!</div>)
+            })
+            let flexBasis = 100 / row.length;
+            let actualRow = (<div style={{display: "flex", flexDirection: "row", flexBasis: flexBasis + "%"}}>
+                {cells}
+            </div>);
+            renders.push(actualRow);
+        });
        return (
-            <>
-                Hi!
-            </>
+            <div style={{display: "flex", flexDirection: "column"}}>
+                {renders}
+            </div>
        )
     }
 }

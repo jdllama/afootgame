@@ -46,6 +46,17 @@ export default class Main extends React.Component {
     this.socket = socket;
 
     this.createGame = this.createGame.bind(this);
+    this.cellClick = this.cellClick.bind(this);
+    this.setThief = this.setThief.bind(this);
+  }
+
+  cellClick(opt) {
+
+  }
+
+  setThief(socketID) {
+    this.socket.emit("make thief", socketID);
+    //this.props.setThief(socketID);
   }
 
   createGame(data) {
@@ -54,28 +65,28 @@ export default class Main extends React.Component {
   }
 
   render() {
-    let returner = null;
+    let pageContent = null;
     if(this.state.inGame === true) {
-      returner = (
+      pageContent = (
         <>
-          <Game players={this.state.players} />
+          <Game setThief={this.setThief} cellclick={this.cellClick} players={this.state.players} map={this.state.gameMap} isThisPlayerMod={this.state.amIMod}  />
         </>
       )
     }
     else {
-      returner = (
+      pageContent = (
         <>
           <GameCreate createGame={this.createGame}/>
         </>
       );
     }
     return (
-      <div>
-        {returner}
-        <div>
-          Hey this is at the bottom of everything OK?
-        </div>
-      </div>
+      <>
+        {pageContent}
+      <footer>
+          Game inspired by <a href="https://boardgamegeek.com/boardgame/1484/clue-great-museum-caper" target="_blank">Clue: The Great Museum Caper</a>. Code by J.D. Lowe, all rights reserved. Source code available on <a href="https://github.com/jdllama/afootgame" target="_blank">Github</a>.
+        </footer>
+      </>
     );
   }
 }

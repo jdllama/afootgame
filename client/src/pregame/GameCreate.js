@@ -59,13 +59,19 @@ export default class GameCreate extends React.Component {
             err = (<div>ERROR:<br />{this.state.error}</div>)
         }
         return (
-            <div className="game-create">
-                <label>Display name:<br /><input type="text" autocomplete="off" name="nickname" value={this.state.nickname} onChange={this.inputChange} /></label>
-                <label>Game code:<br />
-                <input type="text" autocomplete="off" name="gameID" value={this.state.gameID} onChange={this.inputChange} /></label>
-                <button onClick={this.joinGame}>Create/join game</button>
-                {err}
-            </div>
+            <>
+                <header style={{width: "100%"}}>
+                    Hi
+                </header>
+                <div className="game-create">
+                    <label>Display name:<br /><input type="text" autocomplete="off" name="nickname" value={this.state.nickname} onChange={this.inputChange} /></label>
+                    <label>Game code:<br />
+                    <input type="text" autocomplete="off" name="gameID" value={this.state.gameID} onChange={this.inputChange} /></label>
+                    <button onClick={this.joinGame}>Create/join game</button>
+                    {err}
+                </div>
+            </>
+            
         )
     }
 }

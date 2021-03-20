@@ -1,6 +1,8 @@
 let app = require("express")();
 let http = require("http").createServer(app);
+//const { default: Player } = require("../client/src/game/Player.js");
 let Game = require("./GameClass.js");
+let Player = require("./PlayerClass.js");
 const PORT = 8080;
 
 let games = {};
@@ -37,6 +39,7 @@ io.sockets.on("connection", socket => {
 
         }
         socket.nickname = data.nickname;
+        let player = new Player(socket);
         activeGame.joinGame(socket, ()=>{
             socket.join(gameID);
             socket.gameID = gameID;
@@ -51,4 +54,23 @@ io.sockets.on("connection", socket => {
             games[gameID].playerLeavesGame(socket);
         }
     });
+
+    //actual game logic goes here
+
+    socket.on("make thief", thiefSocketID => {
+        let gameID = socket.gameID;
+        if(gameID !== undefined) {
+            //games[gameID].playerLeavesGame(socket);
+            let game = games[gameID];
+            if(game !== undefined) {
+                game.authenticateUser(socket.client.id, () => {
+                    //console.log(socket.to(thiefSocketID), thiefSocketID, gameID);
+                    game.setThief(thiefSocketID);
+                    game.updateAllPlayers();
+                });
+            }
+            else socket.emit("error", "There was an error making the thief: No Game found");
+        }
+        else socket.emit("error", "There was an error making the thief: No Game found");
+    })
 });
