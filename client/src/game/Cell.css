@@ -1,0 +1,32 @@
+.Cell {
+    position: relative;
+    border: 1px solid lightgray;
+    display: flex;
+    flex: 1;
+}
+.Wall {
+    display: inline-block;
+    position: absolute;
+}
+.Horizontal {
+    width: 100%;
+    left: 0;
+    height: 5px;
+}
+.Vertical {
+    height: 100%;
+    top: 0;
+    width: 5px;
+}
+.North {
+    top: 0;
+}
+.South {
+    bottom: 0;
+}
+.East {
+    right: 0;
+}
+.West {
+    left: 0;
+}

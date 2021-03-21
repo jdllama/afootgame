@@ -4,6 +4,7 @@ module.exports = class Game {
     constructor(obj) {
         this.gameID = obj.gameID;
         this.players = [];
+        this.currentPlayer = null;
         this.thief = null;
         this.isThiefVisible = false;
         this.gameMap = [...defaultMap];
@@ -15,6 +16,7 @@ module.exports = class Game {
         this.updateAllPlayers = this.updateAllPlayers.bind(this);
         this.setMod = this.setMod.bind(this);
         this.setThief = this.setThief.bind(this);
+        this.isCurrentPlayer = this.isCurrentPlayer.bind(this);
         this.startGame = this.startGame.bind(this);
         this.authenticateUser = this.authenticateUser.bind(this);
     }
@@ -22,6 +24,7 @@ module.exports = class Game {
     startGame() {
         this.isThiefVisible = false;
         this.gameMap = [...defaultMap];
+        this.currentPlayer = null;
         this.gameStatus = "objectivePlacement";
     }
 
@@ -49,7 +52,18 @@ module.exports = class Game {
         this.thief = thief;
     }
 
+    isCurrentPlayer(socketID, success, failure = () => {}) {
+        if(!this.currentPlayer) return failure();
+        if(this.currentPlayer.client.id === socketID) {
+            success();
+        }
+        else {
+            failure();
+        }
+    }
+
     authenticateUser(socketID, success, failure = () => {}) {
+        if(!this.mod) return failure();
         if(this.mod.client.id === socketID) {
             success();
         }
@@ -60,7 +74,6 @@ module.exports = class Game {
 
     updateAllPlayers() {
         this.players.forEach(socket => {
-            console.log("Updating");
             let data = {
                 players: this.players.map(player => {
                     return {

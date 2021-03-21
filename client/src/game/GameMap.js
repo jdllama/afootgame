@@ -1,5 +1,6 @@
 import React from 'react';
-
+import './GameMap.css';
+import Cell from "./Cell";
 export default class GameMap extends React.Component {
     render() {
         /*
@@ -18,17 +19,21 @@ export default class GameMap extends React.Component {
             let cells = [];
 
             row.forEach(cell => {
-                cells.push(<div>Hi!</div>)
+                console.log(cell.cellType)
+                //cells.push(<Cell row={cell.row} col={cell.col} currentObject={cell.currentObject} />);
+                cells.push(<Cell {...cell} />);
             })
             let flexBasis = 100 / row.length;
-            let actualRow = (<div style={{display: "flex", flexDirection: "row", flexBasis: flexBasis + "%"}}>
+            let actualRow = (<div style={{display: "flex",justifyContent: "space-evenly", flexDirection: "row", flexBasis: flexBasis + "%"}}>
                 {cells}
             </div>);
             renders.push(actualRow);
         });
        return (
-            <div style={{display: "flex", flexDirection: "column"}}>
-                {renders}
+            <div className="MapHolder">
+                <div style={{display: "flex", flexDirection: "column",justifyContent: "space-evenly", width: "100%", height: "100%"}}>
+                    {renders}
+                </div>
             </div>
        )
     }
