@@ -5,8 +5,8 @@ export default class GameCreate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            nickname: "",
-            gameID: "",
+            nickname: "asdf",
+            gameID: "asdf",
             error: "",
         };
 
@@ -50,6 +50,7 @@ export default class GameCreate extends React.Component {
            this.setState({error: errs.join(", ")});
            return;
         }
+        
         this.props.createGame({nickname, gameID})
     }
 

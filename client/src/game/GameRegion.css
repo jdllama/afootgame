@@ -1,8 +1,7 @@
 .MapHolder {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
-    width: 800px;
+    width: 100%;
     background-color: aliceblue;
     padding: 15px;
     height:800px;

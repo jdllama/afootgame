@@ -16,7 +16,7 @@ export default class Main extends React.Component {
       thief: null,
     };
 
-    const SERVER = "http://localhost:8080/";
+    const SERVER = "http://192.168.1.2:8080/";
     let socket = socketClient(SERVER, {transports: ['websocket']});;
 
     /*socket.on("join game", () => {

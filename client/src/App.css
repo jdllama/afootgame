@@ -11,4 +11,5 @@ body {
   flex-flow: column;
   align-items: center;
   justify-content: space-evenly;
+  flex:1;
 }

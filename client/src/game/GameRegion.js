@@ -1,7 +1,7 @@
 import React from 'react';
-import './GameMap.css';
+import './GameRegion.css';
 import Cell from "./Cell";
-export default class GameMap extends React.Component {
+export default class GameRegion extends React.Component {
     render() {
         /*
         let players = this.props.players;
@@ -30,11 +30,13 @@ export default class GameMap extends React.Component {
             renders.push(actualRow);
         });
        return (
-            <div className="MapHolder">
-                <div style={{display: "flex", flexDirection: "column",justifyContent: "space-evenly", width: "100%", height: "100%"}}>
-                    {renders}
+           <>
+                <div className="MapHolder">
+                    <div style={{display: "flex", flexDirection: "column",justifyContent: "space-evenly", width: "50%", height: "100%"}}>
+                        {renders}
+                    </div>
                 </div>
-            </div>
+            </>
        )
     }
 }
