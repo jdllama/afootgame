@@ -30,7 +30,9 @@ export default class PlayerList extends React.Component {
 
         return (
             <>
-                <button className="hamburger-button" onClick={this.togglePlayers}><Logo className="hamburger-icon" /></button>
+                <button className="hamburger-button" onClick={this.togglePlayers}>
+                <Logo className="hamburger-icon" />
+                </button>
             <div className="player-list">
                 {renders}
             </div>

@@ -16,11 +16,13 @@ export default class GameRegion extends React.Component {
        let map = this.props.map;
        let mapRenders = [];
        //console.log(map);
+       let maybeValues = [];
         map.forEach(row => {
             let cells = [];
 
             row.forEach(cell => {
-                console.log(cell.cellType)
+                //console.log(cell.cellType)
+                maybeValues.push(cell.cellType);
                 //cells.push(<Cell row={cell.row} col={cell.col} currentObject={cell.currentObject} />);
                 cells.push(<Cell {...cell} />);
             })
@@ -30,6 +32,9 @@ export default class GameRegion extends React.Component {
             </div>);
             mapRenders.push(actualRow);
         });
+        console.log(maybeValues.filter((val, index, self) => {
+            return self.indexOf(val) === index;
+        }))
        return (
            <div className="GameRegion">
                 <div className="MapHolder">

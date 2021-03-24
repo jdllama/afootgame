@@ -17,11 +17,56 @@ export default class GameMap extends React.Component {
     "currentPlayers": []
 }
         */
+       /*
+       [
+    null,
+    "Room 1",
+    "Hallway",
+    "Room 4",
+    "Room 3"
+]
+       */
     }
     render() {
         let cell = this.props;
+        let type = cell.cellType;
+        let color = null;
+        let rooms = {
+            "Blank": {
+                color: "#FFFFFF",
+            },
+            "Hallway": {
+                color: "lightgray",
+            },
+            "Room 1": {
+                color: "#7209B7",
+            },
+            "Room 2": {
+                color: "#D7263D",
+            },
+            "Room 3": {
+                color: "#08A4BD",
+            },
+            "Room 4": {
+                color: "#33673B",
+            },
+            "Room 5": {
+                color: "#FF9F1C",
+            },
+            "Main Room": {
+                color: "#FDF0D5",
+            },
+            "Security": {
+                color: "#4C4C4C",
+            },
+        }
+        if(rooms[type]) {
+            color = rooms[type].color
+        }
+        console.log(color);
+        //color = rooms[type] || null;
         return (
-        <span className="Cell">
+        <span className="Cell" style={{backgroundColor: color}}>
             <span className="Wall Horizontal North" style={{ backgroundColor: cell.northWall === true ? "black" : ""}}></span>
             <span className="Wall Horizontal South" style={{ backgroundColor: cell.southWall === true ? "black" : ""}}></span>
             <span className="Wall Vertical West" style={{ backgroundColor: cell.westWall === true ? "black" : ""}}></span>
