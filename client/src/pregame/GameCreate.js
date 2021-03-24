@@ -62,15 +62,18 @@ export default class GameCreate extends React.Component {
         return (
             <>
                 <header style={{width: "100%"}}>
-                    Hi
+                    Logo will go here
                 </header>
                 <div className="game-create">
-                    <label>Display name:<br /><input type="text" autocomplete="off" name="nickname" value={this.state.nickname} onChange={this.inputChange} /></label>
+                    <label>Display name:<br /><input type="text" autoComplete="off" name="nickname" value={this.state.nickname} onChange={this.inputChange} /></label>
                     <label>Game code:<br />
-                    <input type="text" autocomplete="off" name="gameID" value={this.state.gameID} onChange={this.inputChange} /></label>
+                    <input type="text" autoComplete="off" name="gameID" value={this.state.gameID} onChange={this.inputChange} /></label>
                     <button onClick={this.joinGame}>Create/join game</button>
                     {err}
                 </div>
+                <footer>
+      Game inspired by <a href="https://boardgamegeek.com/boardgame/1484/clue-great-museum-caper" rel="noreferrer" target="_blank">Clue: The Great Museum Caper</a>. Code by J.D. Lowe, all rights reserved. Source code available on <a href="https://github.com/jdllama/afootgame" rel="noreferrer" target="_blank">Github</a>.
+    </footer>
             </>
             
         )

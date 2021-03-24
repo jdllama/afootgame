@@ -28,21 +28,25 @@ io.sockets.on("connection", socket => {
     socket.on("try join game", data => {
         let gameID = data.gameID;
         let activeGame = null;
-
+        let setMod = (socket) => {};
         if(games[gameID]) {
             activeGame = games[gameID];
         }
         else {
             activeGame = new Game(data);
             activeGame.setMod(socket);
+            setMod = (socket) => {
+                activeGame.setMod(socket.client.id)
+            }
             games[gameID] = activeGame;
 
         }
         socket.nickname = data.nickname;
-        let player = new Player(socket);
-        activeGame.joinGame(socket, ()=>{
+        //let player = new Player(socket);
+        activeGame.joinGame(socket, (player)=>{
             socket.join(gameID);
             socket.gameID = gameID;
+            setMod(socket);
             activeGame.updateAllPlayers();
         }, (err) => {
             socket.emit("error", `There was an error connecting to the game: ${err}`);

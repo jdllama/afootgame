@@ -2,14 +2,20 @@
   box-sizing: border-box;
 }
 
+html {
+  height:100%;
+  width:100%;
+}
+
 body {
   background-color: #595959;
+  height:100%;
 }
 
 #root {
   display: flex;
   flex-flow: column;
   align-items: center;
-  justify-content: space-evenly;
   flex:1;
+  height:100%;
 }

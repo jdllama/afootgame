@@ -33,28 +33,34 @@ module.exports = class Game {
             if(this.gameStatus !== "pending") {
                 return fail("Game is currently active");
             }
-            this.players.push(socket);
-            success();
+            //this.players.push(socket);
+            let player = new Player(socket);
+            this.players.push(player);
+            success(player);
         }
         else fail("Room is full");
     }
 
-    setMod(socket) {
-        this.mod = socket;
+    setMod(socketID) {
+        //this.mod = socket;
+        let mod = null;
+        this.players.forEach(player => {
+            if(player.id === socketID) mod = player;
+        })
+        this.mod = mod;
     }
 
     setThief(socket) {
         let thief = null;
         this.players.forEach(player => {
-            //console.log("Fart", player);
-            if(player.client.id === socket) thief = player;
+            if(player.id === socket) thief = player;
         })
         this.thief = thief;
     }
 
     isCurrentPlayer(socketID, success, failure = () => {}) {
         if(!this.currentPlayer) return failure();
-        if(this.currentPlayer.client.id === socketID) {
+        if(this.currentPlayer.id === socketID) {
             success();
         }
         else {
@@ -64,7 +70,7 @@ module.exports = class Game {
 
     authenticateUser(socketID, success, failure = () => {}) {
         if(!this.mod) return failure();
-        if(this.mod.client.id === socketID) {
+        if(this.mod.id === socketID) {
             success();
         }
         else {
@@ -73,29 +79,29 @@ module.exports = class Game {
     }
 
     updateAllPlayers() {
-        this.players.forEach(socket => {
+        this.players.forEach(player => {
             let data = {
-                players: this.players.map(player => {
+                players: this.players.map(playerInner => {
                     return {
-                        nickname: player.nickname,
-                        isMe: player.client.id === socket.client.id,
-                        isMod: player.client.id === this.mod.client.id,
-                        isThief: (this.thief && (this.thief.client.id === player.client.id)) ? true : false,
-                        socketID: player.client.id
+                        nickname: playerInner.nickname,
+                        isMe: playerInner.id === player.id,
+                        isMod: playerInner.id === this.mod.id,
+                        isThief: (this.thief && (this.thief.id === playerInner.id)) ? true : false,
+                        socketID: playerInner.id
                     }
                 }),
-                thief: this.thief ? this.thief.client.id : null,
+                thief: this.thief ? this.thief.id : null,
                 gameMap: this.gameMap.map(row => {
                     return row.map(cell => {
                         let fakeCell = {...cell};
                         //console.log(fakeCell);
                         if(this.thief) {
-                            if(socket.client.id === this.thief.client.id) {
+                            if(player.id === this.thief.id) {
                                 //I might need to do some kind of logic in the future, you never know!
                             }
                             else {
-                                fakeCell.currentPlayers = fakeCell.currentPlayers.filter(player => {
-                                    return player.client.id !== this.thief.client.id;
+                                fakeCell.currentPlayers = fakeCell.currentPlayers.filter(playerInner => {
+                                    return playerInner.id !== this.thief.id;
                                 });
                             }
                         };
@@ -105,19 +111,23 @@ module.exports = class Game {
                 
                 gameStatus: this.gameStatus,
                 inGame: true,
-                amIMod: socket.client.id === this.mod.client.id,
+                currentPlayerData: {
+                    amIMod: player.id === this.mod.id,
+                    actions: []
+                },
+                
             };
             //console.log(data);
-            socket.emit("game update", data);
+            player.socket.emit("game update", data);
         });
     }
 
     playerLeavesGame(socket) {
         this.players = this.players.filter(player => {
-            return player.client.id !== socket.client.id;
+            return player.id !== socket.client.id;
         });
-        if(this.mod.client.id === socket.client.id) {
-            if(this.players[0] !== undefined) this.setMod(this.players[0]);
+        if(this.mod.id === socket.client.id) {
+            if(this.players[0] !== undefined) this.setMod(this.players[0].id);
         }
         this.updateAllPlayers();
     }

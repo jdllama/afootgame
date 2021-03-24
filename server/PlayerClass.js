@@ -1,5 +1,7 @@
 module.exports = class Player {
-    constructor() {
-        
+    constructor(socket) {
+        this.id = socket.client.id;
+        this.nickname = socket.nickname;
+        this.socket = socket;
     }
 }

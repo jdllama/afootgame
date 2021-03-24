@@ -1,3 +1,23 @@
 .player-list {
-    display: flex;
+    display:flex;
+    flex-flow:column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+.hamburger-icon {
+    fill: white;
+    background-color: blue;
+    position: absolute;
+    bottom:0;
+    left:0;
+    margin-left: 3px;
+    margin-bottom: 3px;
+    width:125px;
+    height:125px;
+    border-radius:50px;
+    z-index: 9999;
+    padding:8px;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import './GameRegion.css';
 import Cell from "./Cell";
+import GameDetails from "./GameDetails";
 export default class GameRegion extends React.Component {
     render() {
         /*
@@ -13,7 +14,7 @@ export default class GameRegion extends React.Component {
         )
         */
        let map = this.props.map;
-       let renders = [];
+       let mapRenders = [];
        //console.log(map);
         map.forEach(row => {
             let cells = [];
@@ -27,16 +28,17 @@ export default class GameRegion extends React.Component {
             let actualRow = (<div style={{display: "flex",justifyContent: "space-evenly", flexDirection: "row", flexBasis: flexBasis + "%"}}>
                 {cells}
             </div>);
-            renders.push(actualRow);
+            mapRenders.push(actualRow);
         });
        return (
-           <>
+           <div className="GameRegion">
                 <div className="MapHolder">
-                    <div style={{display: "flex", flexDirection: "column",justifyContent: "space-evenly", width: "50%", height: "100%"}}>
-                        {renders}
+                    <div style={{display: "flex", flexDirection: "column",justifyContent: "space-evenly", width: "100%", height: "100%"}}>
+                        {mapRenders}
                     </div>
                 </div>
-            </>
+                <GameDetails GameDetails={this.props.GameDetails} />
+            </div>
        )
     }
 }

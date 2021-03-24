@@ -8,24 +8,57 @@ export default class Main extends React.Component {
   constructor(props) {
     
     super(props);
+    /*
+    {
+        players: this.players.map(player => {
+            return {
+                nickname: player.nickname,
+                isMe: player.client.id === socket.client.id,
+                isMod: player.client.id === this.mod.client.id,
+                isThief: (this.thief && (this.thief.client.id === player.client.id)) ? true : false,
+                socketID: player.client.id
+            }
+        }),
+        thief: this.thief ? this.thief.client.id : null,
+        gameMap: this.gameMap.map(row => {
+            return row.map(cell => {
+                let fakeCell = {...cell};
+                //console.log(fakeCell);
+                if(this.thief) {
+                    if(socket.client.id === this.thief.client.id) {
+                        //I might need to do some kind of logic in the future, you never know!
+                    }
+                    else {
+                        fakeCell.currentPlayers = fakeCell.currentPlayers.filter(player => {
+                            return player.client.id !== this.thief.client.id;
+                        });
+                    }
+                };
+                return fakeCell;
+            })
+        }),
+        
+        gameStatus: this.gameStatus,
+        inGame: true,
+        currentPlayerData: {
+                    amIMod: player.id === this.mod.id,
+                    actions: []
+                },
+    }
+    */
     this.state = {
       inGame: false,
       gameMap: [],
       players: [],
       gameStatus: null,
       thief: null,
+      currentPlayerData: {},
     };
 
     const SERVER = "http://192.168.1.2:8080/";
     let socket = socketClient(SERVER, {transports: ['websocket']});;
 
-    /*socket.on("join game", () => {
-      this.setState({inGame: true});
-    })
-    */
-
     socket.on("game update", data => {
-      console.log(data);
       this.setState(data);
     })
 
@@ -36,6 +69,7 @@ export default class Main extends React.Component {
         players: [],
         gameStatus: null,
         thief: null,
+        currentPlayerData: {},
       });
     });
 
@@ -69,7 +103,7 @@ export default class Main extends React.Component {
     if(this.state.inGame === true) {
       pageContent = (
         <>
-          <Game setThief={this.setThief} cellclick={this.cellClick} players={this.state.players} map={this.state.gameMap} isThisPlayerMod={this.state.amIMod}  />
+          <Game details={{gameStatus: this.state.gameStatus, currentPlayerData: this.state.currentPlayerData,}}setThief={this.setThief} cellclick={this.cellClick} players={this.state.players} map={this.state.gameMap} isThisPlayerMod={this.state.amIMod}  />
         </>
       )
     }
@@ -83,9 +117,7 @@ export default class Main extends React.Component {
     return (
       <>
         {pageContent}
-      <footer>
-          Game inspired by <a href="https://boardgamegeek.com/boardgame/1484/clue-great-museum-caper" target="_blank">Clue: The Great Museum Caper</a>. Code by J.D. Lowe, all rights reserved. Source code available on <a href="https://github.com/jdllama/afootgame" target="_blank">Github</a>.
-        </footer>
+      
       </>
     );
   }
