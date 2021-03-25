@@ -11,6 +11,8 @@ module.exports = class Game {
         this.gameStatus = "pending";
         this.unusedPaintings = [];
         this.mod = null;
+        this.basePainting = require("fs").readFileSync(__dirname + "/easel.svg", "utf-8");
+        
 
         this.joinGame = this.joinGame.bind(this);
         this.playerLeavesGame = this.playerLeavesGame.bind(this);
@@ -34,7 +36,12 @@ module.exports = class Game {
 
     makePaintings() {
         let arr = [];
-
+        const colors = ["red", "yellow"];
+        colors.forEach(color => {
+            let myCopy = `${this.basePainting}`;
+            myCopy = myCopy.replace("[[]]", color);
+            arr.push(myCopy);
+        })
         return arr;
     }
 

@@ -43,7 +43,7 @@ export default class GameRegion extends React.Component {
                         {mapRenders}
                     </div>
                 </div>
-                <GameDetails GameDetails={this.props.GameDetails} />
+                <GameDetails startGame={this.props.startGame} GameDetails={this.props.GameDetails} />
             </div>
        )
     }

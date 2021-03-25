@@ -1,8 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 372.078 372.078" style="enable-background:new 0 0 372.078 372.078;" xml:space="preserve">
+<svg version="1.1" x="0px" y="0px" viewBox="0 0 372.078 372.078" style="enable-background:new 0 0 372.078 372.078;">
 <g>
 	<path d="M285.768,217.988h-21.074v-176c0-4.143-3.357-7.5-7.5-7.5h-52.44V7.5c0-4.143-3.357-7.5-7.5-7.5h-22.427
 		c-4.143,0-7.5,3.357-7.5,7.5v26.988h-52.44c-4.143,0-7.5,3.357-7.5,7.5v176H86.311c-4.143,0-7.5,3.357-7.5,7.5v22.43
@@ -15,6 +11,6 @@
 		l-21.033-101.66h7.59L268.115,357.078z M278.268,240.418H93.811v-7.43h184.457V240.418z"/>
 </g>
 <g>
-    <rect x="122.387" y="49.488" width="127.307" height="168.5" style="fill:rgb(255,0,0);"/>
+    <rect x="122.387" y="49.488" width="127.307" height="168.5" style="fill:[[]];"/>
 </g>
 </svg>
