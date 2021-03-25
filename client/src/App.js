@@ -86,6 +86,7 @@ export default class Main extends React.Component {
     this.createGame = this.createGame.bind(this);
     this.cellClick = this.cellClick.bind(this);
     this.setThief = this.setThief.bind(this);
+    this.startGame = this.startGame.bind(this);
   }
 
   cellClick(opt) {
@@ -102,12 +103,22 @@ export default class Main extends React.Component {
     this.socket.emit("try join game", data);
   }
 
+  startGame() {
+    this.socket.emit("try start game");
+  }
+
   render() {
     let pageContent = null;
     if(this.state.inGame === true) {
+      let gameDetails = {
+        gameStatus: this.state.gameStatus,
+        currentPlayerData: this.state.currentPlayerData,
+        count: this.state.count,
+        hasThief: this.state.hasThief
+      }
       pageContent = (
         <>
-          <Game details={{gameStatus: this.state.gameStatus, currentPlayerData: this.state.currentPlayerData,count: this.state.count, hasThief: this.state.hasThief}} setThief={this.setThief} cellclick={this.cellClick} players={this.state.players} map={this.state.gameMap} isThisPlayerMod={this.state.currentPlayerData.amIMod}  />
+          <Game details={gameDetails} setThief={this.setThief} cellclick={this.cellClick} players={this.state.players} map={this.state.gameMap} isThisPlayerMod={this.state.currentPlayerData.amIMod}  />
         </>
       )
     }

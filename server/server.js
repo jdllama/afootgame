@@ -61,6 +61,26 @@ io.sockets.on("connection", socket => {
 
     //actual game logic goes here
 
+    socket.on("try start game", () => {
+        let gameID = socket.gameID;
+        if(gameID !== undefined) {
+            //games[gameID].playerLeavesGame(socket);
+            let game = games[gameID];
+            if(game !== undefined) {
+                game.authenticateUser(socket.client.id, () => {
+                    game.startGame(() => {
+                        game.updateAllPlayers();
+                    },(err) => {
+                        socket.emit("error", `There was an error starting the game: ${err}`);
+                    })
+                    
+                });
+            }
+            else socket.emit("error", "There was an error starting the game: No Game found");
+        }
+        else socket.emit("error", "There was an error starting the game: game not assigned");
+    });
+
     socket.on("make thief", thiefSocketID => {
         let gameID = socket.gameID;
         if(gameID !== undefined) {

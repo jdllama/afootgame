@@ -8,7 +8,7 @@ export default class GameDetails extends React.Component {
         //console.log(details)
         let startButton;
         if(amIMod === true) {
-            if(hasThief === true && count >= 2) {
+            if(hasThief === true && count >= 1) {
                 startButton = <button>Start Game</button>
             }
             

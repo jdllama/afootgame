@@ -9,6 +9,7 @@ module.exports = class Game {
         this.isThiefVisible = false;
         this.gameMap = [...defaultMap];
         this.gameStatus = "pending";
+        this.unusedPaintings = [];
         this.mod = null;
 
         this.joinGame = this.joinGame.bind(this);
@@ -19,13 +20,22 @@ module.exports = class Game {
         this.isCurrentPlayer = this.isCurrentPlayer.bind(this);
         this.startGame = this.startGame.bind(this);
         this.authenticateUser = this.authenticateUser.bind(this);
+        this.makePaintings = this.makePaintings.bind(this);
     }
 
-    startGame() {
+    startGame(success, fail) {
         this.isThiefVisible = false;
         this.gameMap = [...defaultMap];
         this.currentPlayer = null;
         this.gameStatus = "objectivePlacement";
+        this.unusedPaintings = this.makePaintings();
+        success();
+    }
+
+    makePaintings() {
+        let arr = [];
+
+        return arr;
     }
 
     joinGame(socket, success, fail) {
@@ -117,7 +127,7 @@ module.exports = class Game {
                 },
                 count: this.players.length,
                 hasThief: this.thief != null,
-                
+                unusedPaintings: this.unusedPaintings,
             };
             //console.log(data);
             player.socket.emit("game update", data);
