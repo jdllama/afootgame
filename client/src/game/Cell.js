@@ -26,7 +26,13 @@ export default class GameMap extends React.Component {
     "Room 3"
 ]
        */
+      this.handleClick = this.handleClick.bind(this);
     }
+
+    handleClick() {
+
+    }
+
     render() {
         let cell = this.props;
         let type = cell.cellType;
@@ -63,7 +69,6 @@ export default class GameMap extends React.Component {
         if(rooms[type]) {
             color = rooms[type].color
         }
-        console.log(color);
         //color = rooms[type] || null;
         return (
         <span className="Cell" style={{backgroundColor: color}}>

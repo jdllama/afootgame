@@ -115,6 +115,8 @@ module.exports = class Game {
                     amIMod: player.id === this.mod.id,
                     actions: []
                 },
+                count: this.players.length,
+                hasThief: this.thief != null,
                 
             };
             //console.log(data);

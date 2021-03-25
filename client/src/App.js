@@ -44,6 +44,8 @@ export default class Main extends React.Component {
                     amIMod: player.id === this.mod.id,
                     actions: []
                 },
+                count: this.players.length,
+                hasThief: this.thief != null,
     }
     */
     this.state = {
@@ -53,6 +55,8 @@ export default class Main extends React.Component {
       gameStatus: null,
       thief: null,
       currentPlayerData: {},
+      count: 0,
+      hasThief: false
     };
 
     const SERVER = "http://192.168.1.2:8080/";
@@ -103,7 +107,7 @@ export default class Main extends React.Component {
     if(this.state.inGame === true) {
       pageContent = (
         <>
-          <Game details={{gameStatus: this.state.gameStatus, currentPlayerData: this.state.currentPlayerData,}}setThief={this.setThief} cellclick={this.cellClick} players={this.state.players} map={this.state.gameMap} isThisPlayerMod={this.state.amIMod}  />
+          <Game details={{gameStatus: this.state.gameStatus, currentPlayerData: this.state.currentPlayerData,count: this.state.count, hasThief: this.state.hasThief}} setThief={this.setThief} cellclick={this.cellClick} players={this.state.players} map={this.state.gameMap} isThisPlayerMod={this.state.currentPlayerData.amIMod}  />
         </>
       )
     }

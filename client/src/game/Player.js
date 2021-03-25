@@ -23,6 +23,7 @@ export default class Player extends React.Component {
                 <br />
                 Mod: {isMod ? "Yes" : "No"}
                 <br />
+                Fart
                 {isThisPlayerMod === true ? <button onClick={this.setThief}>Make This Player Thief</button> : ""}
             </div>
         )

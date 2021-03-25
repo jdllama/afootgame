@@ -32,9 +32,10 @@ export default class GameRegion extends React.Component {
             </div>);
             mapRenders.push(actualRow);
         });
-        console.log(maybeValues.filter((val, index, self) => {
+        /*console.log(maybeValues.filter((val, index, self) => {
             return self.indexOf(val) === index;
         }))
+        */
        return (
            <div className="GameRegion">
                 <div className="MapHolder">
