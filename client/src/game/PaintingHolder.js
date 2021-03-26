@@ -9,7 +9,7 @@ export default class PaintingHolder extends React.Component {
         let renders = [];
         renders = this.props.unusedPaintings.map(painting => {
             let parser = new HTMLtoReact();
-            return parser.parse(painting);
+            return <span draggable="true">{parser.parse(painting)}</span>
         });
         return (
         <>
