@@ -1,6 +1,6 @@
 import React from 'react';
 import Game from "./game/Game";
-import GameCreate from "./pregame/GameCreate";
+import FrontPage from "./pregame/FrontPage";
 import socketClient  from "socket.io-client";
 import './normalize.css';
 import './App.css';
@@ -65,7 +65,7 @@ export default class Main extends React.Component {
     let socket = socketClient(SERVER, {transports: ['websocket']});;
 
     socket.on("game update", data => {
-      console.log(data);
+      //console.log(data);
       this.setState(data);
     })
 
@@ -89,11 +89,21 @@ export default class Main extends React.Component {
     this.createGame = this.createGame.bind(this);
     this.cellClick = this.cellClick.bind(this);
     this.setThief = this.setThief.bind(this);
+    this.makePlayer = this.makePlayer.bind(this);
+    this.makeSpectator = this.makeSpectator.bind(this);
     this.startGame = this.startGame.bind(this);
   }
 
   cellClick(opt) {
 
+  }
+
+  makePlayer(socketID) {
+    this.socket.emit("make player", socketID);
+  }
+
+  makeSpectator(socketID) {
+    this.socket.emit("make spectator", socketID);
   }
 
   setThief(socketID) {
@@ -122,21 +132,20 @@ export default class Main extends React.Component {
       }
       pageContent = (
         <>
-          <Game details={gameDetails} setThief={this.setThief} cellclick={this.cellClick} players={this.state.players} map={this.state.gameMap} startGame={this.startGame} isThisPlayerMod={this.state.currentPlayerData.amIMod}  />
+          <Game details={gameDetails} setThief={this.setThief} makePlayer={this.makePlayer} makeSpectator={this.makeSpectator} cellclick={this.cellClick} players={this.state.players} spectators={this.state.spectators} map={this.state.gameMap} startGame={this.startGame} isThisPlayerMod={this.state.currentPlayerData.amIMod}  />
         </>
       )
     }
     else {
       pageContent = (
         <>
-          <GameCreate createGame={this.createGame}/>
+          <FrontPage createGame={this.createGame}/>
         </>
       );
     }
     return (
       <>
         {pageContent}
-      
       </>
     );
   }

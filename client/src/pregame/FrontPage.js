@@ -1,7 +1,7 @@
 import React from 'react';
-import "./GameCreate.css";
+import "./FrontPage.css";
 
-export default class GameCreate extends React.Component {
+export default class FrontPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

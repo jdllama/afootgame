@@ -4,6 +4,7 @@ module.exports = class Game {
     constructor(obj) {
         this.gameID = obj.gameID;
         this.players = [];
+        this.spectators = [];
         this.currentPlayer = null;
         this.thief = null;
         this.isThiefVisible = false;
@@ -19,6 +20,8 @@ module.exports = class Game {
         this.updateAllPlayers = this.updateAllPlayers.bind(this);
         this.setMod = this.setMod.bind(this);
         this.setThief = this.setThief.bind(this);
+        this.moveToPlayer = this.moveToPlayer.bind(this);
+        this.moveToSpectator = this.moveToSpectator.bind(this);
         this.isCurrentPlayer = this.isCurrentPlayer.bind(this);
         this.startGame = this.startGame.bind(this);
         this.authenticateUser = this.authenticateUser.bind(this);
@@ -46,6 +49,10 @@ module.exports = class Game {
     }
 
     joinGame(socket, success, fail) {
+        let player = new Player(socket);
+        this.spectators.push(player);
+        success(player);
+        /*
         if(this.players.length <= 5) {
             if(this.gameStatus !== "pending") {
                 return fail("Game is currently active");
@@ -56,6 +63,7 @@ module.exports = class Game {
             success(player);
         }
         else fail("Room is full");
+        */
     }
 
     setMod(socketID) {
@@ -73,6 +81,29 @@ module.exports = class Game {
             if(player.id === socket) thief = player;
         })
         this.thief = thief;
+    }
+
+    moveToPlayer(socketID) {
+        let holder = null;
+        this.spectators.forEach(spectator => {
+            if(spectator.id === socketID) holder = spectator;
+        });
+        this.spectators = this.spectators.filter(spectator => {
+            return spectator.id !== socketID;
+        })
+        if(holder !== null) this.players.push(holder);
+    }
+
+    moveToSpectator(socketID) {
+        if(this.mod.id === socketID) return;
+        let holder = null;
+        this.players.forEach(player => {
+            if(player.id === socketID) holder = player;
+        });
+        this.players = this.players.filter(players => {
+            return players.id !== socketID;
+        })
+        if(holder !== null) this.spectators.push(holder);
     }
 
     isCurrentPlayer(socketID, success, failure = () => {}) {
@@ -96,9 +127,18 @@ module.exports = class Game {
     }
 
     updateAllPlayers() {
-        this.players.forEach(player => {
+        const dataBuilder = player => {
             let data = {
                 players: this.players.map(playerInner => {
+                    return {
+                        nickname: playerInner.nickname,
+                        isMe: playerInner.id === player.id,
+                        isMod: playerInner.id === this.mod.id,
+                        isThief: (this.thief && (this.thief.id === playerInner.id)) ? true : false,
+                        socketID: playerInner.id
+                    }
+                }),
+                spectators: this.spectators.map(playerInner => {
                     return {
                         nickname: playerInner.nickname,
                         isMe: playerInner.id === player.id,
@@ -138,11 +178,16 @@ module.exports = class Game {
             };
             //console.log(data);
             player.socket.emit("game update", data);
-        });
+        };
+        this.players.forEach(dataBuilder);
+        this.spectators.forEach(dataBuilder);
     }
 
     playerLeavesGame(socket) {
         this.players = this.players.filter(player => {
+            return player.id !== socket.client.id;
+        });
+        this.spectators = this.spectators.filter(player => {
             return player.id !== socket.client.id;
         });
         if(this.mod.id === socket.client.id) {

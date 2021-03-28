@@ -1,4 +1,5 @@
 import React from 'react';
+import "./Player.css";
 
 export default class Player extends React.Component {
     constructor(props) {
@@ -12,6 +13,19 @@ export default class Player extends React.Component {
     }
 
     render() {
+        const {isThisPlayerMod, isMe, isMod, isThief, socketID, nickname, makeSpectator, setThief} = this.props;
+        let showCrown;
+        if(isThisPlayerMod) showCrown = <div className="Moderator"></div>
+        return (
+        <section className="Player">
+            <header>
+                <div className="Nickname">{nickname}</div>
+                {showCrown}
+            </header>
+            <footer>Fart</footer>
+        </section>
+        );
+        /*
         const isMe = this.props.isMe;
         const nickname = this.props.nickname;
         const isMod = this.props.isMod;
@@ -27,5 +41,6 @@ export default class Player extends React.Component {
                 {isThisPlayerMod === true ? <button onClick={this.setThief}>Make This Player Thief</button> : ""}
             </div>
         )
+        */
     }
 }

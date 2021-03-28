@@ -29,6 +29,7 @@ io.sockets.on("connection", socket => {
         let gameID = data.gameID;
         let activeGame = null;
         let setMod = (socket) => {};
+        let setFirstPlayer = (socket) => {};
         if(games[gameID]) {
             activeGame = games[gameID];
         }
@@ -36,17 +37,22 @@ io.sockets.on("connection", socket => {
             activeGame = new Game(data);
             activeGame.setMod(socket);
             setMod = (socket) => {
-                activeGame.setMod(socket.client.id)
-            }
+                activeGame.setMod(socket.client.id);
+            };
+            setFirstPlayer = (socket) => {
+                activeGame.moveToPlayer(socket.client.id);
+            };
             games[gameID] = activeGame;
 
         }
         socket.nickname = data.nickname;
         //let player = new Player(socket);
-        activeGame.joinGame(socket, (player)=>{
+        activeGame.joinGame(socket, ()=>{
             socket.join(gameID);
             socket.gameID = gameID;
+            setFirstPlayer(socket);
             setMod(socket);
+            
             activeGame.updateAllPlayers();
         }, (err) => {
             socket.emit("error", `There was an error connecting to the game: ${err}`);
@@ -79,6 +85,39 @@ io.sockets.on("connection", socket => {
             else socket.emit("error", "There was an error starting the game: No Game found");
         }
         else socket.emit("error", "There was an error starting the game: game not assigned");
+    });
+
+    socket.on("make player", playerSocketID => {
+        let gameID = socket.gameID;
+        if(gameID !== undefined) {
+            //games[gameID].playerLeavesGame(socket);
+            let game = games[gameID];
+            if(game !== undefined) {
+                game.authenticateUser(socket.client.id, () => {
+                    //console.log(socket.to(thiefSocketID), thiefSocketID, gameID);
+                    game.moveToPlayer(playerSocketID);
+                    game.updateAllPlayers();
+                });
+            }
+            else socket.emit("error", "There was an error making the spectator a player: No Game found");
+        }
+        else socket.emit("error", "There was an error making the spectator a player: No Game found");
+    });
+
+    socket.on("make spectator", playerSocketID => {
+        let gameID = socket.gameID;
+        if(gameID !== undefined) {
+            let game = games[gameID];
+            if(game !== undefined) {
+                game.authenticateUser(socket.client.id, () => {
+                    //console.log(socket.to(thiefSocketID), thiefSocketID, gameID);
+                    game.moveToSpectator(playerSocketID);
+                    game.updateAllPlayers();
+                });
+            }
+            else socket.emit("error", "There was an error making the player a spectator: No Game found");
+        }
+        else socket.emit("error", "There was an error making the player a spectator: No Game found");
     });
 
     socket.on("make thief", thiefSocketID => {

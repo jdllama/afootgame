@@ -4,21 +4,44 @@ import {ReactComponent as Logo} from "../hamburger.svg";
 import "./PlayerList.css";
 
 export default class PlayerList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            playersVisible: false,
-        };
-
-        this.togglePlayers = this.togglePlayers.bind(this);
-    }
-
-    togglePlayers() {
-        let playersVisible = !this.state.playersVisible;
-        this.setState({playersVisible})
-    }
-
     render() {
+        /*
+        setThief={this.props.setThief}
+                    makeSpectator={this.props.makeSpectator}
+                    players={this.props.players}
+                    startGame={this.props.startGame}
+                    isThisPlayerMod={this.props.isThisPlayerMod}*/
+       const {setThief, players, isThisPlayerMod, makeSpectator} = this.props;
+        let renders = players.map(player => {
+            
+           const {isMe, isMod, isThief, nickname, socketID} = player;
+            /*let myRender;
+            if(isThisPlayerMod === true) myRender = <div>{player.nickname}<button onClick={() => {this.makeSpectator(player.socketID)}}>-</button></div>
+            else myRender = <div>{player.nickname}</div>
+            return myRender;
+            this.props.makeSpectator(socketID);
+            */
+            return <Player
+                isThisPlayerMod={isThisPlayerMod}
+                isMe={isMe}
+                isMod={isMod}
+                isThief={isThief}
+                socketID={socketID}
+                nickname={nickname}
+                makeSpectator={makeSpectator}
+                setThief={setThief}
+            />
+        })
+        return (
+            <>
+                <div className="PlayerList" style={{width: "100%"}}>
+                    {renders}
+                </div>
+                
+            </>
+        );
+    }
+        /*
         let players = this.props.players;
         let renders;
         if(this.state.playersVisible === true) {
@@ -39,5 +62,5 @@ export default class PlayerList extends React.Component {
             </>
             
         )
-    }
+        */
 }
