@@ -79,7 +79,7 @@ module.exports = class Game {
         let thief = null;
         this.players.forEach(player => {
             if(player.id === socket) thief = player;
-        })
+        });
         this.thief = thief;
     }
 

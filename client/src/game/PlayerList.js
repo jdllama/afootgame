@@ -16,7 +16,6 @@ export default class PlayerList extends React.Component {
         for(let i = 0; i<8;i++) {
             let player = players[i];
             if(player !== undefined) {
-                console.log(player);
                 const {isMe, isMod, isThief, nickname, socketID} = player;
             
                 renders.push(<Player

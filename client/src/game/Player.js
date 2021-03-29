@@ -4,17 +4,17 @@ import "./Player.css";
 export default class Player extends React.Component {
     constructor(props) {
         super(props);
-        this.socketID = props.socketID;
+        this.socketID = this.props.socketID;
         this.setThief = this.setThief.bind(this);
     }
 
     setThief() {
-        this.props.setThief(this.socketID);
+        this.props.setThief(this.props.socketID);
     }
 
     render() {
 
-        const {isThisPlayerMod, isMe, isMod, isThief, socketID, nickname, makeSpectator, setThief} = this.props;
+        const {isThisPlayerMod, isMe, isMod, isThief, socketID, nickname, makeSpectator} = this.props;
         let showCrown;
         let thiefOrDetective = <div className="Detective" title="Detective">🕵️</div>;
         if(isMod === true) showCrown = <div className="Moderator" title="Moderator">👑</div>
@@ -25,6 +25,11 @@ export default class Player extends React.Component {
             <footer></footer>
         </section>);
         }
+
+        let thiefButton;
+        if(isThisPlayerMod) {
+            if(!isThief) thiefButton = <button onClick={this.setThief}>Make Thief</button>
+        }
         return (
         <section className="Player">
             <header>
@@ -32,7 +37,7 @@ export default class Player extends React.Component {
                 {showCrown}
                 {thiefOrDetective}
             </header>
-            <footer>{isThisPlayerMod && <button>Make Thief</button>}</footer>
+            <footer>{thiefButton}</footer>
         </section>
         );
         /*
