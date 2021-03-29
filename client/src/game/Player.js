@@ -13,16 +13,26 @@ export default class Player extends React.Component {
     }
 
     render() {
+
         const {isThisPlayerMod, isMe, isMod, isThief, socketID, nickname, makeSpectator, setThief} = this.props;
         let showCrown;
-        if(isThisPlayerMod) showCrown = <div className="Moderator"></div>
+        let thiefOrDetective = <div className="Detective" title="Detective">🕵️</div>;
+        if(isMod === true) showCrown = <div className="Moderator" title="Moderator">👑</div>
+        if(isThief) thiefOrDetective = <div className="Thief" title="Thief">👿</div>;
+        if(socketID === undefined) {
+            return (<section className="Player PlayerUnassigned">
+            <header></header>
+            <footer></footer>
+        </section>);
+        }
         return (
         <section className="Player">
             <header>
                 <div className="Nickname">{nickname}</div>
                 {showCrown}
+                {thiefOrDetective}
             </header>
-            <footer>Fart</footer>
+            <footer>{isThisPlayerMod && <button>Make Thief</button>}</footer>
         </section>
         );
         /*

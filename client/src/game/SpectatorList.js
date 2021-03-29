@@ -1,7 +1,7 @@
 import React from 'react';
 import Player from "./Player";
 import {ReactComponent as Logo} from "../hamburger.svg";
-import "./PlayerList.css";
+import "./SpectatorList.css";
 
 export default class SpectatorList extends React.Component {
     constructor(props) {
@@ -26,7 +26,7 @@ export default class SpectatorList extends React.Component {
         })
         return (
             <>
-                <div className="PlayerList" style={{width: "100%"}}>
+                <div className="SpectatorList">
                     {renders}
                 </div>
                 

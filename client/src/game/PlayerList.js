@@ -11,16 +11,38 @@ export default class PlayerList extends React.Component {
                     players={this.props.players}
                     startGame={this.props.startGame}
                     isThisPlayerMod={this.props.isThisPlayerMod}*/
-       const {setThief, players, isThisPlayerMod, makeSpectator} = this.props;
+        const {setThief, players, isThisPlayerMod, makeSpectator} = this.props;
+        let renders = [];
+        for(let i = 0; i<8;i++) {
+            let player = players[i];
+            if(player !== undefined) {
+                console.log(player);
+                const {isMe, isMod, isThief, nickname, socketID} = player;
+            
+                renders.push(<Player
+                    isThisPlayerMod={isThisPlayerMod}
+                    isMe={isMe}
+                    isMod={isMod}
+                    isThief={isThief}
+                    socketID={socketID}
+                    nickname={nickname}
+                    makeSpectator={makeSpectator}
+                    setThief={setThief}
+                />);
+                
+            }
+            else {
+                renders.push(<Player />)
+            }
+            if(i === 3) {
+                renders.push(<div style={{flexBasis: "100%", height: 0}}></div>)
+            }
+        }
+        /*
         let renders = players.map(player => {
             
-           const {isMe, isMod, isThief, nickname, socketID} = player;
-            /*let myRender;
-            if(isThisPlayerMod === true) myRender = <div>{player.nickname}<button onClick={() => {this.makeSpectator(player.socketID)}}>-</button></div>
-            else myRender = <div>{player.nickname}</div>
-            return myRender;
-            this.props.makeSpectator(socketID);
-            */
+            const {isMe, isMod, isThief, nickname, socketID} = player;
+            
             return <Player
                 isThisPlayerMod={isThisPlayerMod}
                 isMe={isMe}
@@ -31,10 +53,11 @@ export default class PlayerList extends React.Component {
                 makeSpectator={makeSpectator}
                 setThief={setThief}
             />
-        })
+        });
+        */
         return (
             <>
-                <div className="PlayerList" style={{width: "100%"}}>
+                <div className="PlayerList">
                     {renders}
                 </div>
                 

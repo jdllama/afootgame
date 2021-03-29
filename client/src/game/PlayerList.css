@@ -1,8 +1,12 @@
 .PlayerList {
     display: flex;
-    width:60%;
-    flex-flow: row;
+    width:75%;
+    flex-flow: wrap;
+    flex-grow: 0;
+    flex-shrink: 0;
 }
+
+
 /*
 .player-list {
     display:flex;
