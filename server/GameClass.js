@@ -1,5 +1,6 @@
 const defaultMap = require("./demoRoom");
 let Player = require("./PlayerClass");
+let Shape = require("./ShapeClass");
 module.exports = class Game {
     constructor(obj) {
         this.gameID = obj.gameID;
@@ -11,6 +12,17 @@ module.exports = class Game {
         this.gameMap = [...defaultMap];
         this.gameStatus = "pending";
         this.unusedPaintings = [];
+        this.playerColors = ["red", "green", "blue", "yellow"]
+        this.shapes = [
+            new Shape("star"),
+            new Shape("X"),
+            new Shape("moon"),
+            new Shape("circles"),
+            new Shape("star"),
+            new Shape("X"),
+            new Shape("moon"),
+            new Shape("circles"),
+        ]
         this.mod = null;
         this.basePainting = require("fs").readFileSync(__dirname + "/easel.svg", "utf-8");
         
@@ -90,7 +102,16 @@ module.exports = class Game {
         });
         this.spectators = this.spectators.filter(spectator => {
             return spectator.id !== socketID;
-        })
+        });
+
+        let shapeIndex = this.shapes.findIndex(el => {
+            return el.used === false;
+        });
+
+        this.shapes[shapeIndex].used = true;
+
+        holder.shape = this.shapes[shapeIndex];
+
         if(holder !== null) this.players.push(holder);
     }
 
@@ -103,6 +124,13 @@ module.exports = class Game {
         this.players = this.players.filter(players => {
             return players.id !== socketID;
         })
+
+        let shapeIndex = this.shapes.findIndex(el => {
+            return el.shape === holder.shape.shape;
+        });
+
+        this.shapes[shapeIndex].used = false;
+
         if(holder !== null) this.spectators.push(holder);
     }
 
@@ -170,11 +198,15 @@ module.exports = class Game {
                 inGame: true,
                 currentPlayerData: {
                     amIMod: player.id === this.mod.id,
-                    actions: []
+                    actions: [],
+                    color: player.color,
+                    shape: player.shape,
                 },
                 count: this.players.length,
                 hasThief: this.thief != null,
                 unusedPaintings: this.unusedPaintings,
+                colors: this.colors,
+                shapes: this.shapes,
             };
             //console.log(data);
             player.socket.emit("game update", data);
@@ -184,6 +216,9 @@ module.exports = class Game {
     }
 
     playerLeavesGame(socket) {
+        let holder = this.players.find(player => {
+            return player.id === socket.client.id;
+        })
         this.players = this.players.filter(player => {
             return player.id !== socket.client.id;
         });
@@ -193,6 +228,11 @@ module.exports = class Game {
         if(this.mod.id === socket.client.id) {
             if(this.players[0] !== undefined) this.setMod(this.players[0].id);
         }
+        let shapeIndex = this.shapes.findIndex(el => {
+            return el.shape === holder.shape.shape;
+        });
+
+        this.shapes[shapeIndex].used = false;
         this.updateAllPlayers();
     }
 }

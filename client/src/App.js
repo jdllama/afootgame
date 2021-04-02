@@ -47,6 +47,8 @@ export default class Main extends React.Component {
         count: this.players.length,
         hasThief: this.thief != null,
         unusedPaintings: this.unusedPaintings,
+        colors: this.colors,
+        shapes: this.shapes,
     }
     */
     this.state = {
@@ -59,13 +61,15 @@ export default class Main extends React.Component {
       count: 0,
       hasThief: false,
       unusedPaintings: [],
+      colors: [],
+      shapes: [],
     };
 
     const SERVER = "http://192.168.1.2:8080/";
     let socket = socketClient(SERVER, {transports: ['websocket']});;
 
     socket.on("game update", data => {
-      //console.log(data);
+      console.log(data);
       this.setState(data);
     })
 
@@ -132,7 +136,20 @@ export default class Main extends React.Component {
       }
       pageContent = (
         <>
-          <Game details={gameDetails} setThief={this.setThief} makePlayer={this.makePlayer} makeSpectator={this.makeSpectator} cellclick={this.cellClick} players={this.state.players} spectators={this.state.spectators} map={this.state.gameMap} startGame={this.startGame} isThisPlayerMod={this.state.currentPlayerData.amIMod}  />
+          <Game 
+            details={gameDetails}
+            setThief={this.setThief}
+            makePlayer={this.makePlayer}
+            makeSpectator={this.makeSpectator}
+            cellclick={this.cellClick}
+            players={this.state.players}
+            spectators={this.state.spectators}
+            map={this.state.gameMap}
+            startGame={this.startGame}
+            isThisPlayerMod={this.state.currentPlayerData.amIMod}
+            colors={this.state.colors}
+            shapes={this.state.shapes}
+            />
         </>
       )
     }

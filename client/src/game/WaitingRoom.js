@@ -18,19 +18,21 @@ export default class WaitingRoom extends React.Component {
             map={map}
             gameStatus={gameStatus}
         */
+        const {setThief, makeSpectator, players, startGame, isThisPlayerMod, shapes, makePlayer, spectators} = this.props;
         return (
             <div className="WaitingRoom">
                 <PlayerList 
-                    setThief={this.props.setThief}
-                    makeSpectator={this.props.makeSpectator}
-                    players={this.props.players}
-                    startGame={this.props.startGame}
-                    isThisPlayerMod={this.props.isThisPlayerMod}
+                    setThief={setThief}
+                    makeSpectator={makeSpectator}
+                    players={players}
+                    startGame={startGame}
+                    isThisPlayerMod={isThisPlayerMod}
+                    shapes={shapes}
                 />
                 <SpectatorList
-                    makePlayer={this.props.makePlayer}
-                    spectators={this.props.spectators}
-                    isThisPlayerMod={this.props.isThisPlayerMod}
+                    makePlayer={makePlayer}
+                    spectators={spectators}
+                    isThisPlayerMod={isThisPlayerMod}
                 />
             </div>
         )

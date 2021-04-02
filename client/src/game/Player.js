@@ -14,7 +14,8 @@ export default class Player extends React.Component {
 
     render() {
 
-        const {isThisPlayerMod, isMe, isMod, isThief, socketID, nickname, makeSpectator} = this.props;
+        const {isThisPlayerMod, isMe, isMod, isThief, socketID, nickname, makeSpectator, shapes} = this.props;
+        
         let showCrown;
         let thiefOrDetective = <div className="Detective" title="Detective">🕵️</div>;
         if(isMod === true) showCrown = <div className="Moderator" title="Moderator">👑</div>
@@ -26,6 +27,7 @@ export default class Player extends React.Component {
         </section>);
         }
 
+        console.log(shapes);
         let thiefButton;
         if(isThisPlayerMod) {
             if(!isThief) thiefButton = <button onClick={this.setThief}>Make Thief</button>
@@ -37,6 +39,9 @@ export default class Player extends React.Component {
                 {showCrown}
                 {thiefOrDetective}
             </header>
+            <section>
+
+            </section>
             <footer>{thiefButton}</footer>
         </section>
         );

@@ -11,7 +11,7 @@ export default class PlayerList extends React.Component {
                     players={this.props.players}
                     startGame={this.props.startGame}
                     isThisPlayerMod={this.props.isThisPlayerMod}*/
-        const {setThief, players, isThisPlayerMod, makeSpectator} = this.props;
+        const {setThief, players, isThisPlayerMod, makeSpectator, shapes} = this.props;
         let renders = [];
         for(let i = 0; i<8;i++) {
             let player = players[i];
@@ -27,6 +27,7 @@ export default class PlayerList extends React.Component {
                     nickname={nickname}
                     makeSpectator={makeSpectator}
                     setThief={setThief}
+                    shapes={shapes}
                 />);
                 
             }

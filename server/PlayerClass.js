@@ -3,5 +3,7 @@ module.exports = class Player {
         this.id = socket.client.id;
         this.nickname = socket.nickname;
         this.socket = socket;
+        this.color = null;
+        this.shape = null;
     }
 }

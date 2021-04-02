@@ -6,6 +6,7 @@ import WaitingRoom from "./WaitingRoom";
 export default class Game extends React.Component {
     render() {
         //console.log(this.props)
+        /*
         const setThief = this.props.setThief;
         const makePlayer = this.props.makePlayer;
         const makeSpectator = this.props.makeSpectator;
@@ -16,11 +17,15 @@ export default class Game extends React.Component {
         const startGame = this.props.startGame;
         const cellClick = this.props.cellClick;
         const map = this.props.map;
+        const shapes = this.props.shapes;
+        */
 
-        const count = GameDetails.count;
-        const currentPlayerData = GameDetails.currentPlayerData;
-        const gameStatus = GameDetails.gameStatus;
-        const hasThief = GameDetails.hasThief;
+        const {setThief, makePlayer, makeSpectator, players, spectators, details, isThisPlayerMod, startGame, cellClick, map, shapes} = this.props;
+
+        const count = details.count;
+        const currentPlayerData = details.currentPlayerData;
+        const gameStatus = details.gameStatus;
+        const hasThief = details.hasThief;
         if(gameStatus === "pending") {
             return (
                 <>
@@ -30,12 +35,13 @@ export default class Game extends React.Component {
                         makeSpectator={makeSpectator}
                         players={players}
                         spectators={spectators}
-                        GameDetails={GameDetails}
+                        GameDetails={details}
                         isThisPlayerMod={isThisPlayerMod}
                         startGame={startGame}
                         cellClick={cellClick}
                         map={map}
                         gameStatus={gameStatus}
+                        shapes={shapes}
                     />
                 </>
             )
