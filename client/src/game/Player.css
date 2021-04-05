@@ -1,6 +1,7 @@
 .Player {
     background-color: gray;
     min-width: 23% !important;
+    max-width: 23% !important;
     height: 40%;
     margin: 1%;
     display:flex;
@@ -25,19 +26,21 @@
 
 .Player header, .Player footer {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    position: absolute;
+    
 }
 
-.Player header {
-    top: 0
-}
 
 .Player footer {
-    bottom: 0
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
 }
 
 .Nickname {
 
+}
+
+.Mine {
+    border: 2px solid red;
 }

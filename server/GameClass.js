@@ -163,7 +163,7 @@ module.exports = class Game {
                         isMe: playerInner.id === player.id,
                         isMod: playerInner.id === this.mod.id,
                         isThief: (this.thief && (this.thief.id === playerInner.id)) ? true : false,
-                        socketID: playerInner.id
+                        socketID: playerInner.id,
                     }
                 }),
                 spectators: this.spectators.map(playerInner => {

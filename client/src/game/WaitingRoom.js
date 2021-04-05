@@ -18,7 +18,7 @@ export default class WaitingRoom extends React.Component {
             map={map}
             gameStatus={gameStatus}
         */
-        const {setThief, makeSpectator, players, startGame, isThisPlayerMod, shapes, makePlayer, spectators} = this.props;
+        const {setThief, makeSpectator, players, startGame, isThisPlayerMod, shapes, makePlayer, spectators, GameDetails} = this.props;
         return (
             <div className="WaitingRoom">
                 <PlayerList 
@@ -28,6 +28,7 @@ export default class WaitingRoom extends React.Component {
                     startGame={startGame}
                     isThisPlayerMod={isThisPlayerMod}
                     shapes={shapes}
+                    GameDetails={GameDetails}
                 />
                 <SpectatorList
                     makePlayer={makePlayer}

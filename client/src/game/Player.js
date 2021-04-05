@@ -14,12 +14,13 @@ export default class Player extends React.Component {
 
     render() {
 
-        const {isThisPlayerMod, isMe, isMod, isThief, socketID, nickname, makeSpectator, shapes} = this.props;
+        const {isThisPlayerMod, isMe, isMod, isThief, socketID, nickname, makeSpectator, shapes, GameDetails} = this.props;
         
+        console.log(GameDetails)
         let showCrown;
-        let thiefOrDetective = <div className="Detective" title="Detective">🕵️</div>;
-        if(isMod === true) showCrown = <div className="Moderator" title="Moderator">👑</div>
-        if(isThief) thiefOrDetective = <div className="Thief" title="Thief">👿</div>;
+        let thiefOrDetective = <div className="Detective" title="Detective">Detective</div>;
+        if(isMod === true) showCrown = <span className="Moderator" title="Moderator">👑</span>
+        if(isThief) thiefOrDetective = <div className="Thief" title="Thief">Thief</div>;
         if(socketID === undefined) {
             return (<section className="Player PlayerUnassigned">
             <header></header>
@@ -27,7 +28,11 @@ export default class Player extends React.Component {
         </section>);
         }
 
-        console.log(shapes);
+        let shapesButtons = shapes.map(shape => {
+            let className = "";
+            if(shape.used && (GameDetails.currentPlayerData.shape && shape.shape == GameDetails.currentPlayerData.shape.shape)) className="Mine";
+            return <button style={{width: "25%"}} className={className} disabled={shape.used}>{shape.shape}</button>
+        });
         let thiefButton;
         if(isThisPlayerMod) {
             if(!isThief) thiefButton = <button onClick={this.setThief}>Make Thief</button>
@@ -35,12 +40,14 @@ export default class Player extends React.Component {
         return (
         <section className="Player">
             <header>
-                <div className="Nickname">{nickname}</div>
-                {showCrown}
+                <center>
+                <div className="Nickname">{nickname} {showCrown}</div>
+                <hr style={{width:"98%", margin: 0}} />
                 {thiefOrDetective}
+                </center>
             </header>
-            <section>
-
+            <section style={{display: "flex", flexWrap: "wrap",}}>
+            {shapesButtons}
             </section>
             <footer>{thiefButton}</footer>
         </section>

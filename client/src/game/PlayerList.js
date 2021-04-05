@@ -11,11 +11,12 @@ export default class PlayerList extends React.Component {
                     players={this.props.players}
                     startGame={this.props.startGame}
                     isThisPlayerMod={this.props.isThisPlayerMod}*/
-        const {setThief, players, isThisPlayerMod, makeSpectator, shapes} = this.props;
+        const {setThief, players, isThisPlayerMod, makeSpectator, shapes, GameDetails} = this.props;
         let renders = [];
         for(let i = 0; i<8;i++) {
             let player = players[i];
             if(player !== undefined) {
+                console.log(player, GameDetails);
                 const {isMe, isMod, isThief, nickname, socketID} = player;
             
                 renders.push(<Player
@@ -28,6 +29,7 @@ export default class PlayerList extends React.Component {
                     makeSpectator={makeSpectator}
                     setThief={setThief}
                     shapes={shapes}
+                    GameDetails={GameDetails}
                 />);
                 
             }
