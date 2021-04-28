@@ -96,6 +96,7 @@ export default class Main extends React.Component {
     this.makePlayer = this.makePlayer.bind(this);
     this.makeSpectator = this.makeSpectator.bind(this);
     this.startGame = this.startGame.bind(this);
+    this.changeShape = this.changeShape.bind(this);
   }
 
   cellClick(opt) {
@@ -122,6 +123,10 @@ export default class Main extends React.Component {
 
   startGame() {
     this.socket.emit("try start game");
+  }
+
+  changeShape() {
+
   }
 
   render() {
