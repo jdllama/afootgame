@@ -16,7 +16,8 @@ export default class Player extends React.Component {
 
         const {isThisPlayerMod, isMe, isMod, isThief, socketID, nickname, makeSpectator, shapes, GameDetails} = this.props;
         
-        console.log(GameDetails)
+        //console.log(GameDetails);
+        console.log(isMe);
         let showCrown;
         let thiefOrDetective = <div className="Detective" title="Detective">Detective</div>;
         if(isMod === true) showCrown = <span className="Moderator" title="Moderator">👑</span>
@@ -30,7 +31,7 @@ export default class Player extends React.Component {
 
         let shapesButtons = shapes.map(shape => {
             let className = "";
-            if(shape.used && (GameDetails.currentPlayerData.shape && shape.shape == GameDetails.currentPlayerData.shape.shape)) className="Mine";
+            if(isMe && shape.used && (GameDetails.currentPlayerData.shape && shape.shape == GameDetails.currentPlayerData.shape.shape)) className="Mine";
             return <button style={{width: "25%"}} className={className} disabled={shape.used}>{shape.shape}</button>
         });
         let thiefButton;
