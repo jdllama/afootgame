@@ -14,14 +14,14 @@ module.exports = class Game {
         this.unusedPaintings = [];
         this.playerColors = ["red", "green", "blue", "yellow"]
         this.shapes = [
-            new Shape("star"),
-            new Shape("X"),
             new Shape("moon"),
-            new Shape("circles"),
+            new Shape("cross"),
+            new Shape("diamond"),
+            new Shape("pound"),
             new Shape("star"),
+            new Shape("swirl"),
+            new Shape("dots"),
             new Shape("X"),
-            new Shape("moon"),
-            new Shape("circles"),
         ]
         this.mod = null;
         this.basePainting = require("fs").readFileSync(__dirname + "/easel.svg", "utf-8");

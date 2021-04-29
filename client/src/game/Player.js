@@ -32,7 +32,9 @@ export default class Player extends React.Component {
         let shapesButtons = shapes.map(shape => {
             let className = "";
             if(isMe && shape.used && (GameDetails.currentPlayerData.shape && shape.shape == GameDetails.currentPlayerData.shape.shape)) className="Mine";
-            return <button style={{width: "25%"}} className={className} disabled={shape.used}>{shape.shape}</button>
+            //return <button style={{width: "25%"}} className={className} disabled={shape.used}>{shape.shape}</button>
+            if(isMe === false) return <span style={{width: "25%"}}>{shape.shape}</span>
+            else return <button style={{width: "25%"}} className={className} disabled={shape.used}>{shape.shape}</button>
         });
         let thiefButton;
         if(isThisPlayerMod) {

@@ -125,8 +125,8 @@ export default class Main extends React.Component {
     this.socket.emit("try start game");
   }
 
-  changeShape() {
-
+  changeShape(shape) {
+    this.socket.emit("change shape", shape);
   }
 
   render() {
@@ -147,6 +147,7 @@ export default class Main extends React.Component {
             makePlayer={this.makePlayer}
             makeSpectator={this.makeSpectator}
             cellclick={this.cellClick}
+            changeShape={this.changeShape}
             players={this.state.players}
             spectators={this.state.spectators}
             map={this.state.gameMap}
@@ -154,6 +155,7 @@ export default class Main extends React.Component {
             isThisPlayerMod={this.state.currentPlayerData.amIMod}
             colors={this.state.colors}
             shapes={this.state.shapes}
+            
             />
         </>
       )
