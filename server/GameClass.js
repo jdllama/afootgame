@@ -91,6 +91,8 @@ module.exports = class Game {
         let thief = null;
         this.players.forEach(player => {
             if(player.id === socket) thief = player;
+            //JD work on this
+            //player.shape = null;
         });
         this.thief = thief;
     }
@@ -228,11 +230,15 @@ module.exports = class Game {
         if(this.mod.id === socket.client.id) {
             if(this.players[0] !== undefined) this.setMod(this.players[0].id);
         }
-        let shapeIndex = this.shapes.findIndex(el => {
-            return el.shape === holder.shape.shape;
-        });
+        if(holder && holder.shape) {
+            let shapeIndex = this.shapes.findIndex(el => {
+                return el.shape === holder.shape.shape;
+            });
+            this.shapes[shapeIndex].used = false;
+        }
+        
 
-        this.shapes[shapeIndex].used = false;
+        
         this.updateAllPlayers();
     }
 }
