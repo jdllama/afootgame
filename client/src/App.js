@@ -126,7 +126,7 @@ export default class Main extends React.Component {
   }
 
   changeShape(shape) {
-    this.socket.emit("change shape", shape);
+    //this.socket.emit("change shape", shape);
   }
 
   render() {

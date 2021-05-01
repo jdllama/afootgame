@@ -12,29 +12,29 @@ module.exports = class Shape {
             new Shape("dots"),
             new Shape("X"),
         */
-       if(shape === "moon") {
-
-       }
-       else if(shape === "cross") {
-           
+        if(shape === "moon") {
+            image = "🌛"
         }
         else if(shape === "diamond") {
-           
+           image = "♦";
         }
         else if(shape === "pound") {
            name = "Octo Thorpe";
+           image = "#"
         }
         else if(shape === "star") {
-           
+           image = "☆"
         }
         else if(shape === "swirl") {
-           
+           image = "🌀"
         }
         else if(shape === "dots") {
            name = "Trip Ledots";
+           image = "∴";
         }
         else if(shape === "X") {
            name = "X";
+           image = "X";
         }
         this.name = name;
         this.shape = shape;

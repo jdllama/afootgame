@@ -15,7 +15,6 @@ module.exports = class Game {
         this.playerColors = ["red", "green", "blue", "yellow"]
         this.shapes = [
             new Shape("moon"),
-            new Shape("cross"),
             new Shape("diamond"),
             new Shape("pound"),
             new Shape("star"),

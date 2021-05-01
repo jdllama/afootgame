@@ -16,11 +16,11 @@ mindreading?
 
 shapes:
 
-Crescent Moon
+Crescent Moon 🌛
 Cross (Monseur Croix)
-Diamond
-Pound Sign (Inspector Octothorpe)
-Star
-Swirl (Remo Lino)
-Three Dots (Detective Trip Ledot)
+Diamond ♦
+Pound Sign (Inspector Octothorpe) #
+Star ☆
+Swirl (Remo Lino) 🌀
+Three Dots (Detective Trip Ledot) ∴
 X

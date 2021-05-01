@@ -6,6 +6,12 @@ export default class Player extends React.Component {
         super(props);
         this.socketID = this.props.socketID;
         this.setThief = this.setThief.bind(this);
+        this.changeShape = this.changeShape.bind(this);
+    }
+
+    changeShape(event) {
+        //console.log(event.target.value);
+        this.props.changeShape(event.target.value);
     }
 
     setThief() {
@@ -14,7 +20,7 @@ export default class Player extends React.Component {
 
     render() {
 
-        const {isThisPlayerMod, isMe, isMod, isThief, socketID, nickname, makeSpectator, shapes, GameDetails} = this.props;
+        const {isThisPlayerMod, isMe, isMod, isThief, socketID, nickname, makeSpectator, changeShape, shapes, GameDetails} = this.props;
         
         //console.log(GameDetails);
         let showCrown;
@@ -34,7 +40,14 @@ export default class Player extends React.Component {
             //return <button style={{width: "25%"}} className={className} disabled={shape.used}>{shape.shape}</button>
             if(isThief === true) return null;
             if(isMe === false) return <span style={{width: "25%"}}>{shape.shape}</span>
-            else return <button style={{width: "25%"}} className={className} disabled={shape.used}>{shape.shape}</button>
+            else return <button style={{width: "25%", height: "55px"}} className={className} disabled={shape.used}>{shape.image}</button>
+        });
+        let shapesOptions = shapes.map(shape => {
+            let isSelected = false;
+            if(isMe && shape.used && (GameDetails.currentPlayerData.shape && shape.shape == GameDetails.currentPlayerData.shape.shape)) isSelected = true;
+            if(isThief === true || isMe === false) return null;
+            if(isMe === false) return <span style={{width: "25%"}}>{shape.shape}</span>
+            return <option value={shape.shape} selected={isSelected} disabled={shape.used}>{shape.name} ({shape.image})</option>
         });
         let thiefButton;
         if(isThisPlayerMod) {
@@ -49,8 +62,15 @@ export default class Player extends React.Component {
                 {thiefOrDetective}
                 </center>
             </header>
+            {/*
             <section style={{display: "flex", flexWrap: "wrap",}}>
             {shapesButtons}
+            </section>
+            */}
+            <section style={{display: "flex", flexWrap: "wrap",}}>
+            <select onChange={this.changeShape}>
+            {shapesOptions}
+            </select>
             </section>
             <footer>{thiefButton}</footer>
         </section>

@@ -20,7 +20,7 @@ export default class Game extends React.Component {
         const shapes = this.props.shapes;
         */
 
-        const {setThief, makePlayer, makeSpectator, players, spectators, details, isThisPlayerMod, startGame, cellClick, map, shapes} = this.props;
+        const {setThief, changeShape, makePlayer, makeSpectator, players, spectators, details, isThisPlayerMod, startGame, cellClick, map, shapes} = this.props;
 
         const count = details.count;
         const currentPlayerData = details.currentPlayerData;
@@ -42,6 +42,7 @@ export default class Game extends React.Component {
                         map={map}
                         gameStatus={gameStatus}
                         shapes={shapes}
+                        changeShape={changeShape}
                     />
                 </>
             )
